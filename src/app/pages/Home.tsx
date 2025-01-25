@@ -40,12 +40,13 @@ const Home = () => {
   useEffect(() => {
     setTags(tagToAdd);
   }, [tagToAdd]);
+  
+
   const handleAddTag = () => {
     setTagToAdd([...tagToAdd, tag]);
   };
 
   const handleCreateNote = () => {
-    console.log(date);
     setNotes([
       ...notes,
       {
@@ -101,7 +102,8 @@ const Home = () => {
                   type="text"
                   placeholder="Add tags"
                   className="border-2 p-2"
-                  onInput={(e) => 
+                  value={tag}
+                  onInput={(e) =>
                     setTag(
                       (
                         e.target as HTMLInputElement
@@ -111,7 +113,7 @@ const Home = () => {
                 />
                 <button
                   className="flex gap-2 items-center bg-sky-600 text-white p-2 rounded-md"
-                  onClick={() => handleAddTag}
+                  onClick={() =>{ handleAddTag();setTag('')}}
                 >
                   Add tags <FaTag />
                 </button>
