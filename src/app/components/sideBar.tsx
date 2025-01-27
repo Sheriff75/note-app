@@ -44,7 +44,9 @@ const SideBar = () => {
        {
         tags.map((tag,index)=>{
           return(
-            <li key={index} className="py-2 flex px-2 gap-2 items-center w-[200px] border-2  hover:bg-gray-100 rounded-md "> <FaTag/>{tag}</li>
+            <li key={index} className="py-2 flex px-2 gap-2 justify-start items-center w-[200px] border-2  hover:bg-gray-100 rounded-md "> <FaTag className="text-2xl"/>
+            <p className="text-nowrap truncate capitalize">{tag}</p>
+            </li>
           )
         })
        }

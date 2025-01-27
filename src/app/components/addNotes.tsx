@@ -5,17 +5,18 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { FaTag } from "react-icons/fa";
+import { FaTag,FaAngleRight } from "react-icons/fa";
+import { BiNote } from "react-icons/bi";
 import { NoteContext } from "../layout";
 
-interface AddTagsProps {
+interface AddNotesProps {
   date: string;
   setIsCreate: React.Dispatch<
     React.SetStateAction<boolean>
   >;
 }
 
-const AddTags: React.FC<AddTagsProps> = ({
+const AddNotes: React.FC<AddNotesProps> = ({
   date,
   setIsCreate,
 }) => {
@@ -24,7 +25,8 @@ const AddTags: React.FC<AddTagsProps> = ({
     useState<string>("");
 
   const [addTags, setAddTags] =
-    useState<boolean>(false);
+    useState<boolean>(true);
+  const [showTags, setShowTags] = useState<boolean>(false);
   const [tag, setTag] = useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<
     string[]
@@ -70,14 +72,14 @@ const AddTags: React.FC<AddTagsProps> = ({
     ]);
   };
   return (
-    <div className="flex flex-col justify-center gap-4 items-center border-2 border-t-0 h-full min-h-[578px]">
-      <h1 className="text-2xl text-gray-400">
+    <div className="flex flex-col  justify-center gap-2 items-center border-2 border-t-0 h-full min-h-[578px]">
+      <h1 className="text-3xl text-gray-400">
         Create a new note
       </h1>
       <input
         type="text"
         placeholder="Title"
-        className="border-2 p-2"
+        className="border-2 p-2 py-2.5 w-2/4 rounded-lg "
         onInput={(e) =>
           setTitle(
             (e.target as HTMLInputElement).value
@@ -86,11 +88,12 @@ const AddTags: React.FC<AddTagsProps> = ({
       />
 
       {addTags ? (
-        <div>
+        <div className="w-2/4 flex flex-col gap-2 items-center">
+          <div className="flex gap-2 w-full items-center justify-between">
           <input
             type="text"
-            placeholder="Add tags"
-            className="border-2 p-2"
+            placeholder="Add new tag"
+            className="border-2 p-2 py-2.5 w-[64%]  rounded-lg "
             value={tag}
             onInput={(e) =>
               setTag(
@@ -99,14 +102,29 @@ const AddTags: React.FC<AddTagsProps> = ({
               )
             }
           />
+          <div className="px-4 py-2 rounded-lg flex items-center gap-2 text-lg bg-sky-600 text-white">
+            select tag <FaAngleRight />
+            {
+              
+            }
+          </div>
+            {/* {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-sky-600 text-white p-2 rounded-md"
+              >
+                {tag}
+              </span>
+            ))} */}
+          </div>
           <button
-            className="flex gap-2 items-center bg-sky-600 text-white p-2 rounded-md"
+            className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-40 justify-center text-lg "
             onClick={() => {
               handleAddTag();
               setTag("");
             }}
           >
-            Add tags <FaTag />
+            Add new tag <FaTag />
           </button>
           {tagToAdd.map((tag, index) => (
             <span
@@ -119,7 +137,7 @@ const AddTags: React.FC<AddTagsProps> = ({
         </div>
       ) : (
         <button
-          className="flex gap-2 items-center bg-sky-600 text-white p-2 rounded-md"
+          className="flex gap-2 items-center text-xl bg-sky-600 w-2/6 justify-center text-white p-2 rounded-md"
           onClick={() => setAddTags(true)}
         >
           Add Tags <FaTag />
@@ -132,7 +150,7 @@ const AddTags: React.FC<AddTagsProps> = ({
         cols={30}
         rows={10}
         placeholder="content"
-        className="border-2 p-2"
+        className="border-2 rounded-lg  p-2 w-2/4"
         onInput={(e) =>
           setContent(
             (e.target as HTMLInputElement).value
@@ -140,16 +158,16 @@ const AddTags: React.FC<AddTagsProps> = ({
         }
       ></textarea>
       <button
-        className="flex gap-2 items-center bg-sky-600 text-white p-2 rounded-md"
+        className="flex gap-2 items-center text-xl bg-sky-600 text-white p-2 rounded-md w-2/6 justify-center"
         onClick={() => {
           handleCreateNote();
           setIsCreate(false);
         }}
       >
-        Create note
+        Create note <BiNote />
       </button>
     </div>
   );
 };
 
-export default AddTags;
+export default AddNotes;

@@ -6,11 +6,11 @@ import React, {
   useEffect,
 } from "react";
 import { BiPlus } from "react-icons/bi";
-import AddTag from "../components/addTags"
+import AddNotes from "../components/addNotes"
 
 
 const Home = () => {
-  const [isCreate, setIsCreate] = useState(false);
+  const [isCreate, setIsCreate] = useState(true);
 
   const [date, setDate] = useState<string>("");
 
@@ -42,7 +42,7 @@ const Home = () => {
             </h1>
           </div>
         )}
-        {isCreate && <AddTag date={date} setIsCreate={setIsCreate}/>}
+        {isCreate && <AddNotes date={date} setIsCreate={setIsCreate}/>}
       </div>
     </div>
   );
