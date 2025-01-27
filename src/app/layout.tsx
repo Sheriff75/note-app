@@ -27,9 +27,17 @@ const geistMono = Geist_Mono({
 export const NoteContext = createContext<{
   notes: any[];
   setNotes: Dispatch<SetStateAction<any[]>>;
+  settings: boolean;
+  setSettings: Dispatch<SetStateAction<boolean>>;
+  tags: string[];
+  setTags: Dispatch<SetStateAction<string[]>>;
 }>({
   notes: [],
   setNotes: () => {},
+  settings: false,
+  setSettings: () => {},
+  tags:[],
+  setTags:()=>{}
 });
 
 export default function RootLayout({
@@ -37,8 +45,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notes, setNotes] = useState<any[]>([]);
+  const [tags ,setTags] = useState<string[]>([])
+  const [settings, setSettings] = useState<boolean>(false)
 
   return (
     <html lang="en">
@@ -46,6 +55,10 @@ export default function RootLayout({
         value={{
           notes,
           setNotes,
+          settings,
+          setSettings,
+          tags,
+          setTags
         }}
       >
         <body
