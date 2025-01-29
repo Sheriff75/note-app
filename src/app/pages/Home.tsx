@@ -12,7 +12,7 @@ import { NoteContext } from "../layout";
 
 
 const Home = () => {
-  const [isCreate, setIsCreate] = useState(true);
+  const [isCreate, setIsCreate] = useState(false);
 
   const [date, setDate] = useState<string>("");
     const { notes } = useContext<{

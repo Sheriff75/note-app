@@ -3,7 +3,6 @@
 import React, {
   useState,
   useContext,
-  useEffect,
 } from "react";
 import {
   FaTag,
@@ -29,10 +28,11 @@ const AddNotes: React.FC<AddNotesProps> = ({
     useState<string>("");
 
   const [addTags, setAddTags] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const [showTags, setShowTags] =
     useState<boolean>(false);
-  const [tag, setTag] = useState<string>("");
+  const [currentTag, setCurrentTag] =
+    useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<
     string[]
   >([]);
@@ -53,21 +53,19 @@ const AddNotes: React.FC<AddNotesProps> = ({
       >;
     }>(NoteContext);
 
-  useEffect(() => {
-    tagToAdd.map((tag) => {
-      if (!tags.includes(tag)) {
-        setTags([...tags, tag]);
-      }
-    });
-  }, [tagToAdd]);
 
   const handleAddTag = () => {
-    if (tag.length >= 1) {
-      setTagToAdd([...tagToAdd, tag]);
+    if (currentTag.length >= 1) {
+      setTagToAdd([...tagToAdd, currentTag]);
     }
   };
 
-  const handleCreateNote = () => {
+  const updateGlobalTags = () => {
+    setTags([...new Set([...tags, ...tagToAdd])]);
+   };
+
+
+   function handleCreateNote() {
     setNotes([
       ...notes,
       {
@@ -101,9 +99,9 @@ const AddNotes: React.FC<AddNotesProps> = ({
               type="text"
               placeholder="Add new tag"
               className="border-2 p-2 py-2.5 w-[63%]  rounded-lg "
-              value={tag}
+              value={currentTag}
               onInput={(e) =>
-                setTag(
+                setCurrentTag(
                   (e.target as HTMLInputElement)
                     .value
                 )
@@ -123,7 +121,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
               )}
               {showTags ? (
                 <div className="flex bg-white top-10 w-40 gap-2  shadow-xl p-3 px-2 rounded-lg flex-col absolute">
-                  {tags.length > 0 ?
+                  {tags.length > 0 ? (
                     tags.map((tag, index) => (
                       <button
                         key={index}
@@ -131,9 +129,12 @@ const AddNotes: React.FC<AddNotesProps> = ({
                       >
                         <FaTag /> {tag}
                       </button>
-                    )) : (
-                      <h1 className="text-sky-600 text-center">You have no saved tags</h1>
-                    )}
+                    ))
+                  ) : (
+                    <h1 className="text-sky-600 text-center">
+                      You have no saved tags
+                    </h1>
+                  )}
                 </div>
               ) : (
                 ""
@@ -144,21 +145,21 @@ const AddNotes: React.FC<AddNotesProps> = ({
             className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-full justify-center text-lg "
             onClick={() => {
               handleAddTag();
-              setTag("");
+              setCurrentTag("");
             }}
           >
-           <FaTag /> Add new tag 
+            <FaTag /> Add new tag
           </button>
-            <div className="flex gap-2 w-full items-center justify-center">
+          <div className="flex gap-2 w-full items-center justify-center">
             {tagToAdd.map((tag, index) => (
-            <span
-              key={index}
-              className="bg-sky-600 text-white p-2 rounded-md"
-            >
-              {tag}
-            </span>
-          ))}
-            </div>
+              <span
+                key={index}
+                className="bg-sky-600 text-white p-2 rounded-md"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       ) : (
         <button
@@ -186,6 +187,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
         className="flex gap-2 items-center text-xl bg-sky-600 text-white p-2 rounded-md w-2/6 justify-center"
         onClick={() => {
           handleCreateNote();
+          updateGlobalTags()
           setIsCreate(false);
         }}
       >
