@@ -7,13 +7,29 @@ import React, {
 } from "react";
 import { BiPlus } from "react-icons/bi";
 import AddNotes from "../components/addNotes"
+import { useContext } from "react";
+import { NoteContext } from "../layout";
 
 
 const Home = () => {
   const [isCreate, setIsCreate] = useState(true);
 
   const [date, setDate] = useState<string>("");
-
+    const { notes } = useContext<{
+      notes: any[];
+      setNotes: React.Dispatch<
+        React.SetStateAction<any[]>
+      >;
+      settings: boolean;
+      tags: string[];
+      setSettings: React.Dispatch<
+        React.SetStateAction<boolean>
+      >;
+      setTags: React.Dispatch<
+        React.SetStateAction<string[]>
+      >;
+    }>(NoteContext);
+  
   useEffect(() => {
     const formattedDate =
       new Date().toLocaleString();
@@ -22,7 +38,7 @@ const Home = () => {
 
   
   return (
-    <div className="flex h-[100%] min-h-[575px] border border-t-0 border-r-0">
+    <div className="flex h-[100%]  min-h-[575px] border border-t-0 border-r-0">
       <div className="w-1/4 active:outline-none   p-3 h-fit min-h-[575px]">
         <button
           className="flex items-center bg-sky-600 text-white p-2 rounded-md w-full justify-center font-bold"
@@ -32,6 +48,26 @@ const Home = () => {
           <BiPlus />
           Create new note
         </button>
+        <div>
+          {
+            notes.map((note, index) => (
+              <div key={index}>
+                <h1>
+                {note.title}
+                </h1>
+                {
+                  note.tags.map((tag:string,index:number)=>{
+                    return(
+                      <span key={index} className="bg-sky-600 text-white p-2 rounded-md">{tag}</span>
+                    )
+                  })
+                }
+                {note.date}
+                {note.content}
+              </div>
+            ))
+          }
+        </div>
       </div>
       <div className="w-3/4 h-[100%] min-h-[575px]">
         {!isCreate && (

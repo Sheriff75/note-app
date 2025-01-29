@@ -5,7 +5,11 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { FaTag,FaAngleRight } from "react-icons/fa";
+import {
+  FaTag,
+  FaAngleRight,
+  FaAngleDown,
+} from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { NoteContext } from "../layout";
 
@@ -26,7 +30,8 @@ const AddNotes: React.FC<AddNotesProps> = ({
 
   const [addTags, setAddTags] =
     useState<boolean>(true);
-  const [showTags, setShowTags] = useState<boolean>(false);
+  const [showTags, setShowTags] =
+    useState<boolean>(false);
   const [tag, setTag] = useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<
     string[]
@@ -57,7 +62,9 @@ const AddNotes: React.FC<AddNotesProps> = ({
   }, [tagToAdd]);
 
   const handleAddTag = () => {
-    setTagToAdd([...tagToAdd, tag]);
+    if (tag.length >= 1) {
+      setTagToAdd([...tagToAdd, tag]);
+    }
   };
 
   const handleCreateNote = () => {
@@ -90,43 +97,60 @@ const AddNotes: React.FC<AddNotesProps> = ({
       {addTags ? (
         <div className="w-2/4 flex flex-col gap-2 items-center">
           <div className="flex gap-2 w-full items-center justify-between">
-          <input
-            type="text"
-            placeholder="Add new tag"
-            className="border-2 p-2 py-2.5 w-[64%]  rounded-lg "
-            value={tag}
-            onInput={(e) =>
-              setTag(
-                (e.target as HTMLInputElement)
-                  .value
-              )
-            }
-          />
-          <div className="px-4 py-2 rounded-lg flex items-center gap-2 text-lg bg-sky-600 text-white">
-            select tag <FaAngleRight />
-            {
-              
-            }
-          </div>
-            {/* {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-sky-600 text-white p-2 rounded-md"
-              >
-                {tag}
-              </span>
-            ))} */}
+            <input
+              type="text"
+              placeholder="Add new tag"
+              className="border-2 p-2 py-2.5 w-[63%]  rounded-lg "
+              value={tag}
+              onInput={(e) =>
+                setTag(
+                  (e.target as HTMLInputElement)
+                    .value
+                )
+              }
+            />
+            <div
+              className="px-4 py-2 rounded-lg capitalize relative flex items-center gap-2 text-lg bg-sky-600 text-white"
+              onClick={() =>
+                setShowTags(!showTags)
+              }
+            >
+              select tag{" "}
+              {!showTags ? (
+                <FaAngleRight />
+              ) : (
+                <FaAngleDown />
+              )}
+              {showTags ? (
+                <div className="flex bg-white top-10 w-40 gap-2  shadow-xl p-3 px-2 rounded-lg flex-col absolute">
+                  {tags.length > 0 ?
+                    tags.map((tag, index) => (
+                      <button
+                        key={index}
+                        className="bg-sky-600 capitalize text-white flex items-center gap-2  p-2 rounded-md"
+                      >
+                        <FaTag /> {tag}
+                      </button>
+                    )) : (
+                      <h1 className="text-sky-600 text-center">You have no saved tags</h1>
+                    )}
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
           <button
-            className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-40 justify-center text-lg "
+            className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-full justify-center text-lg "
             onClick={() => {
               handleAddTag();
               setTag("");
             }}
           >
-            Add new tag <FaTag />
+           <FaTag /> Add new tag 
           </button>
-          {tagToAdd.map((tag, index) => (
+            <div className="flex gap-2 w-full items-center justify-center">
+            {tagToAdd.map((tag, index) => (
             <span
               key={index}
               className="bg-sky-600 text-white p-2 rounded-md"
@@ -134,6 +158,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
               {tag}
             </span>
           ))}
+            </div>
         </div>
       ) : (
         <button
