@@ -3,26 +3,13 @@
 "use client";
 
 import {
-  Geist,
-  Geist_Mono,
-} from "next/font/google";
-import {
   createContext,
   useState,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const NoteContext = createContext<{
   notes: any[];
@@ -31,13 +18,17 @@ export const NoteContext = createContext<{
   setSettings: Dispatch<SetStateAction<boolean>>;
   tags: string[];
   setTags: Dispatch<SetStateAction<string[]>>;
+  darkMode: boolean;
+  setDarkMode: Dispatch<SetStateAction<boolean>>;
 }>({
   notes: [],
   setNotes: () => {},
   settings: false,
   setSettings: () => {},
-  tags:[],
-  setTags:()=>{}
+  tags: [],
+  setTags: () => {},
+  darkMode: true,
+  setDarkMode: () => {},
 });
 
 export default function RootLayout({
@@ -45,9 +36,41 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [notes, setNotes] = useState<any[]>([]);
-  const [tags ,setTags] = useState<string[]>([])
-  const [settings, setSettings] = useState<boolean>(false)
+  const initialNotes = localStorage.getItem(
+    "notes"
+  )
+    ? JSON.parse(
+        localStorage.getItem("notes") || "[]"
+      )
+    : [];
+  const initialTags = localStorage.getItem("tags")
+    ? JSON.parse(
+        localStorage.getItem("tags") || "[]"
+      )
+    : [];
+
+  const [notes, setNotes] =
+    useState<any[]>(initialNotes);
+  const [tags, setTags] =
+    useState<string[]>(initialTags);
+  const [darkMode, setDarkMode] =
+    useState<boolean>(false);
+  const [settings, setSettings] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "notes",
+      JSON.stringify(notes)
+    );
+  }, [notes]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "tags",
+      JSON.stringify(tags)
+    );
+  }, [tags]);
 
   return (
     <html lang="en">
@@ -58,11 +81,15 @@ export default function RootLayout({
           settings,
           setSettings,
           tags,
-          setTags
+          setTags,
+          darkMode,
+          setDarkMode,
         }}
       >
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`antialiased ${
+            darkMode && "darkmode text-white"
+          }`}
         >
           {children}
         </body>

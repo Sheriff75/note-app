@@ -18,9 +18,13 @@ const Header = () => {
     setTags: React.Dispatch<
       React.SetStateAction<string[]>
     >;
+          darkMode: boolean;
+          setDarkMode: React.Dispatch<
+            React.SetStateAction<boolean>
+          >;
   }>(NoteContext);
   return (
-    <div className="border border-t-0  w-full relative p-4 px-10 items-center flex justify-between">
+    <div className={"border border-t-0  w-full relative p-4 px-10 items-center flex justify-between"}>
       <h1 className="font-extrabold">
         All Notes
       </h1>

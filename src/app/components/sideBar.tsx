@@ -7,9 +7,9 @@ import React from "react";
 import { GiQuillInk } from "react-icons/gi";
 import { BiHome } from "react-icons/bi";
 import { FaArchive } from "react-icons/fa";
-import { FaTag } from "react-icons/fa";
+import { PiTag } from "react-icons/pi";
 const SideBar = () => {
-  const { tags } = useContext<{
+  const { tags, darkMode } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<
       React.SetStateAction<any[]>
@@ -22,6 +22,10 @@ const SideBar = () => {
     setTags: React.Dispatch<
       React.SetStateAction<string[]>
     >;
+    darkMode: boolean;
+    setDarkMode: React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
   }>(NoteContext);
   return (
     <div className="py-10 px-4  w-[20vw] h-fit min-h-screen ">
@@ -30,26 +34,43 @@ const SideBar = () => {
       </span>
       <ul className="mt-4 border-b-2">
         <Link to={"/"}>
-          <li className="py-2 flex px-2 gap-2 items-center hover:bg-gray-100 rounded-md">
+          <li
+            className={`py-2 flex px-2 gap-2 items-center ${
+              darkMode
+                ? "hover:bg-gray-800"
+                : "hover:bg-gray-200"
+            } rounded-md`}
+          >
             <BiHome /> All Notes
           </li>
         </Link>
         <Link to={"/archive"}>
-          <li className="py-2 flex px-2 gap-2 items-center hover:bg-gray-100 rounded-md">
+          <li
+            className={`py-2 flex px-2 gap-2 items-center mb-1 ${
+              darkMode
+                ? "hover:bg-gray-800"
+                : "hover:bg-gray-200"
+            } rounded-md`}
+          >
             <FaArchive /> Archived
           </li>
         </Link>
       </ul>
       <ul className="mt-4">
-       {
-        tags.map((tag,index)=>{
-          return(
-            <li key={index} className="py-2 flex px-2 gap-2 justify-start items-center w-[200px] border-2  hover:bg-gray-100 rounded-md "> <FaTag className="text-2xl"/>
-            <p className="text-nowrap truncate capitalize">{tag}</p>
+        {tags.map((tag, index) => {
+          return (
+            <li
+              key={index}
+              className={`py-2 flex px-2 gap-2 items-center ${darkMode ? "hover:bg-gray-800": "hover:bg-gray-200"} rounded-md`} 
+            >
+              {" "}
+              <PiTag className="text-2xl" />
+              <p className="text-nowrap truncate capitalize">
+                {tag}
+              </p>
             </li>
-          )
-        })
-       }
+          );
+        })}
       </ul>
     </div>
   );

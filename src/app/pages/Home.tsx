@@ -15,7 +15,7 @@ const Home = () => {
   const [isCreate, setIsCreate] = useState(false);
 
   const [date, setDate] = useState<string>("");
-    const { notes } = useContext<{
+    const { notes,darkMode } = useContext<{
       notes: any[];
       setNotes: React.Dispatch<
         React.SetStateAction<any[]>
@@ -28,11 +28,15 @@ const Home = () => {
       setTags: React.Dispatch<
         React.SetStateAction<string[]>
       >;
+            darkMode: boolean;
+            setDarkMode: React.Dispatch<
+              React.SetStateAction<boolean>
+            >;
     }>(NoteContext);
   
   useEffect(() => {
     const formattedDate =
-      new Date().toLocaleString();
+      new Date().toLocaleDateString();
     setDate(formattedDate)
   }, [isCreate]);
 
@@ -41,7 +45,7 @@ const Home = () => {
     <div className="flex h-[100%]  min-h-[575px] border border-t-0 border-r-0">
       <div className="w-1/4 active:outline-none   p-3 h-fit min-h-[575px]">
         <button
-          className="flex items-center bg-sky-600 text-white p-2 rounded-md w-full justify-center font-bold"
+          className="flex items-center bg-sky-600 mb-3 text-white p-2 rounded-md w-full justify-center font-bold"
           onClick={() => setIsCreate(true)}
         >
           {" "}
@@ -51,19 +55,23 @@ const Home = () => {
         <div>
           {
             notes.map((note, index) => (
-              <div key={index}>
-                <h1>
+              <div key={index}className={`flex flex-col p-1  hover:cursor-pointer mt-1 rounded-lg ${darkMode ? "hover:bg-gray-800": "hover:bg-gray-200"} `}>
+                <h1 className="text-lg  capitalize truncate">
                 {note.title}
                 </h1>
+                <div className="flex gap-2 flex-wrap">
                 {
                   note.tags.map((tag:string,index:number)=>{
                     return(
-                      <span key={index} className="bg-sky-600 text-white p-2 rounded-md">{tag}</span>
+                      <span key={index} className={`w-fit px-1 text-md capitalize rounded-md my-1 ${darkMode ? 'text-white bg-gray-700':"bg-gray-300"}`}>{tag}</span>
                     )
                   })
                 }
+                </div>
+                <p className="text-sm">
                 {note.date}
-                {note.content}
+                </p>
+                <hr />                
               </div>
             ))
           }

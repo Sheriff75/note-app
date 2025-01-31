@@ -3,9 +3,22 @@
 @tailwind utilities;
 
 
-*{
+* {
     border-color: rgba(0, 0, 0, 0.568);
 }
-button{
+
+button {
     cursor: pointer;
+}
+
+.darkmode {
+    background-color: black;
+
+    * {
+        border-color: white !important;
+
+    }
+    input,textarea{
+        background-color: transparent ;
+    }
 }
