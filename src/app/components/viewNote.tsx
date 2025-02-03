@@ -41,7 +41,7 @@ const ViewNote: React.FC<ViewNoteProps> = ({
      >;
    }>(NoteContext);
   return (
-    <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-[578px]">
+    <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-screeen">
       <MdCancel
         size={30}
         className="cursor-pointer absolute right-5 top-5"

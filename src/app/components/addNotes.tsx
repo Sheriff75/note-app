@@ -83,7 +83,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
     ]);
   }
   return (
-    <div className="flex flex-col pt-5 gap-2 border-gray-400  items-center border border-t-0 h-full min-h-[578px]">
+    <div className="flex flex-col pt-5 gap-2 border-gray-400  items-center border border-t-0 h-full min-h-screen">
       <h1 className="text-3xl font-semibold ">
         Create a new note
       </h1>

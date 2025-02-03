@@ -50,7 +50,7 @@ const Home = () => {
   }, [isCreate]);
 
   return (
-    <div className="flex h-[100%]  min-h-[575px] border border-t-0 border-r-0">
+    <div className="flex h-full  min-h-screen border border-t-0 border-r-0">
       <div className="w-1/4 active:outline-none   p-3 h-fit min-h-[575px]">
         <button
           className="flex items-center bg-sky-600 mb-3 text-white p-2 rounded-md w-full justify-center font-bold"
@@ -66,6 +66,7 @@ const Home = () => {
             onClick={
               () => {setIsViewNote(true)
                 setSelectedNote(note)
+                setIsCreate(false)
               }
             }
               key={index}
@@ -124,7 +125,7 @@ const Home = () => {
         )}
         {
           isViewNote && (
-            <ViewNote selectedNote={selectedNote} setIsViewNote={setIsViewNote}/>
+            <ViewNote selectedNote={selectedNote}  setIsViewNote={setIsViewNote}/>
           )
         }
       </div>
