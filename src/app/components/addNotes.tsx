@@ -28,9 +28,9 @@ const AddNotes: React.FC<AddNotesProps> = ({
     useState<string>("");
 
   const [addTags, setAddTags] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const [showTags, setShowTags] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const [currentTag, setCurrentTag] =
     useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<
