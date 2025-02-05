@@ -7,7 +7,7 @@ import Archive from "../pages/Archive";
 
 const Main = () => {
   return (
-    <div className="border-2 border-l-0 border-t-0  w-[80vw] h-fit min-h-screen ">
+    <div className="border-2 border-l-0 border-t-0  w-[80vw] h-fit min-h-[90vh] ">
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

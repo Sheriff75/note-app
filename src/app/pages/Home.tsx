@@ -11,20 +11,20 @@ import ViewNote from "../components/viewNote";
 import { useContext } from "react";
 import { NoteContext } from "../layout";
 
+
+
 type Note = {
+  id: string;
   title: string;
   tags: string[];
   date: string;
   content:string;
 };
-
 const Home = () => {
   const [isCreate, setIsCreate] = useState(false);
-  const [isViewNote,setIsViewNote] = useState(false)
-  const [selectedNote, setSelectedNote] = useState<Note>({ title: "", tags: [], date: "",content:"" })
 
   const [date, setDate] = useState<string>("");
-  const { notes, darkMode } = useContext<{
+  const { notes, darkMode,selectedNote,setSelectedNote,isViewNote,setIsViewNote } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<
       React.SetStateAction<any[]>
@@ -41,6 +41,10 @@ const Home = () => {
     setDarkMode: React.Dispatch<
       React.SetStateAction<boolean>
     >;
+      selectedNote: Note;
+      setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+    isViewNote: boolean;
+    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
   }>(NoteContext);
 
   useEffect(() => {
@@ -50,8 +54,8 @@ const Home = () => {
   }, [isCreate]);
 
   return (
-    <div className="flex h-full  min-h-screen border border-t-0 border-r-0">
-      <div className="w-1/4 active:outline-none   p-3 h-fit min-h-[575px]">
+    <div className="flex h-fit min-h-[80vh] border border-t-0 border-r-0">
+      <div className="w-1/4 active:outline-none   p-3 h-fit min-h-[86.9vh]">
         <button
           className="flex items-center bg-sky-600 mb-3 text-white p-2 rounded-md w-full justify-center font-bold"
           onClick={() => setIsCreate(true)}
@@ -108,9 +112,9 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <div className="w-3/4 h-[100%] min-h-[575px]">
+      <div className="w-3/4 h-[100%]">
         {!isCreate && !isViewNote && (
-          <div className="flex justify-center items-center h-[578px] border border-t-0">
+          <div className="flex justify-center items-center h-[86.9vh] border border-t-0">
             <h1 className="text-2xl text-gray-400">
               Select a note to view or create a
               new note.

@@ -11,12 +11,22 @@ import {
 } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { NoteContext } from "../layout";
+import { v4 as uuid } from "uuid";
 
 interface AddNotesProps {
   date: string;
   setIsCreate: React.Dispatch<
     React.SetStateAction<boolean>
   >;
+}
+
+
+interface Note {
+  id: string;
+  title: string;
+  date: string;
+  tags: string[];
+  content: string;
 }
 
 const AddNotes: React.FC<AddNotesProps> = ({
@@ -37,25 +47,34 @@ const AddNotes: React.FC<AddNotesProps> = ({
     string[]
   >([]);
 
-  const { notes, setNotes, tags, setTags,darkMode } =
-    useContext<{
-      notes: any[];
-      setNotes: React.Dispatch<
-        React.SetStateAction<any[]>
-      >;
-      settings: boolean;
-      tags: string[];
-      setSettings: React.Dispatch<
-        React.SetStateAction<boolean>
-      >;
-      setTags: React.Dispatch<
-        React.SetStateAction<string[]>
-      >;
-      darkMode: boolean;
-      setDarkMode: React.Dispatch<
-        React.SetStateAction<boolean>
-      >;
-    }>(NoteContext);
+  const {
+    notes,
+    setNotes,
+    tags,
+    setTags,
+    darkMode,
+  } = useContext<{
+     notes: any[];
+        setNotes: React.Dispatch<
+          React.SetStateAction<any[]>
+        >;
+        settings: boolean;
+        tags: string[];
+        setSettings: React.Dispatch<
+          React.SetStateAction<boolean>
+        >;
+        setTags: React.Dispatch<
+          React.SetStateAction<string[]>
+        >;
+        darkMode: boolean;
+        setDarkMode: React.Dispatch<
+          React.SetStateAction<boolean>
+        >;
+          selectedNote: Note;
+          setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+        isViewNote: boolean;
+        setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
+  }>(NoteContext);
 
   const handleAddTag = () => {
     if (currentTag.length >= 1) {
@@ -72,9 +91,11 @@ const AddNotes: React.FC<AddNotesProps> = ({
   };
 
   function handleCreateNote() {
+    const id = uuid()
     setNotes([
       ...notes,
       {
+        id,
         title,
         content,
         tags: tagToAdd,
@@ -82,6 +103,8 @@ const AddNotes: React.FC<AddNotesProps> = ({
       },
     ]);
   }
+
+  console.log(notes)
   return (
     <div className="flex flex-col pt-5 gap-2 border-gray-400  items-center border border-t-0 h-full min-h-screen">
       <h1 className="text-3xl font-semibold ">
@@ -126,7 +149,12 @@ const AddNotes: React.FC<AddNotesProps> = ({
                 <FaAngleDown />
               )}
               {showTags ? (
-                <div className={`flex top-10 w-40 gap-2 shadow-xl p-1 px-2 rounded-lg flex-col absolute bg-white ${darkMode && " bg-transparent border-2 backdrop-blur-sm"}`}>
+                <div
+                  className={`flex top-10 w-40 gap-2 shadow-xl p-1 px-2 rounded-lg flex-col absolute bg-white ${
+                    darkMode &&
+                    " bg-transparent border-2 backdrop-blur-sm"
+                  }`}
+                >
                   {tags.length > 0 ? (
                     tags.map((tag, index) => (
                       <button
@@ -139,7 +167,6 @@ const AddNotes: React.FC<AddNotesProps> = ({
                         className="bg-sky-600 capitalize text-white flex items-center gap-2 w-full p-2 rounded-md"
                       >
                         <FaTag /> {tag}
-                        
                       </button>
                     ))
                   ) : (

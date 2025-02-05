@@ -20,6 +20,12 @@ export const NoteContext = createContext<{
   setTags: Dispatch<SetStateAction<string[]>>;
   darkMode: boolean;
   setDarkMode: Dispatch<SetStateAction<boolean>>;
+  selectedNote: Note;
+  setSelectedNote: Dispatch<SetStateAction<Note>>;
+  isViewNote: boolean;
+  setIsViewNote: Dispatch<
+    SetStateAction<boolean>
+  >;
 }>({
   notes: [],
   setNotes: () => {},
@@ -29,7 +35,25 @@ export const NoteContext = createContext<{
   setTags: () => {},
   darkMode: true,
   setDarkMode: () => {},
+  selectedNote: {
+    id: "",
+    title: "",
+    tags: [],
+    date: "",
+    content: "",
+  },
+  setSelectedNote: () => {},
+  isViewNote: false,
+  setIsViewNote: () => {},
 });
+
+type Note = {
+  id: string;
+  title: string;
+  tags: string[];
+  date: string;
+  content: string;
+};
 
 export default function RootLayout({
   children,
@@ -57,7 +81,17 @@ export default function RootLayout({
     useState<boolean>(false);
   const [settings, setSettings] =
     useState<boolean>(false);
+  const [isViewNote, setIsViewNote] =
+    useState(false);
 
+  const [selectedNote, setSelectedNote] =
+    useState<Note>({
+      id: "",
+      title: "",
+      tags: [],
+      date: "",
+      content: "",
+    });
   useEffect(() => {
     localStorage.setItem(
       "notes",
@@ -84,6 +118,10 @@ export default function RootLayout({
           setTags,
           darkMode,
           setDarkMode,
+          selectedNote,
+          setSelectedNote,
+          isViewNote,
+          setIsViewNote,
         }}
       >
         <body
