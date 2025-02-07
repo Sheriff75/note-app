@@ -39,7 +39,7 @@ const Settings = () => {
     <div className={`absolute right-0 top-0 z-50 w-64 h-[100vh] shadow-lg ${darkMode ? 'bg-black backdrop-blur-lg' : 'bg-white'} p-4 rounded-md`}>
       <MdCancel
         size={30}
-        className="cursor-pointer"
+        className="cursor-pointer absolute right-4 top-6 hover:text-red-500"
         onClick={() => setSettings(false)}
       />
 

@@ -60,7 +60,11 @@ const Main = () => {
 
   useEffect(() => {
     const formattedDate =
-      new Date().toLocaleDateString();
+      new Date().toLocaleDateString("en-US", {  
+        year: "numeric",  
+        month: "long",  
+        day: "numeric"  
+      });  ;
     setDate(formattedDate);
   }, [isCreate]);
 
@@ -76,7 +80,7 @@ const Main = () => {
           Create new note
         </button>
         <hr />
-        <h1 className="text-2xl font-bold pt-4 text-center">
+        <h1 className="text-2xl font-bold pt-4 px-1 border-b">
           All Notes
         </h1>
         <div>
@@ -93,7 +97,7 @@ const Main = () => {
                 setIsCreate(false);
               }}
               key={index}
-              className={`flex flex-col p-1  hover:cursor-pointer mt-1 rounded-lg ${
+              className={`flex flex-col p-2  hover:cursor-pointer mt-1 rounded-lg ${
                 darkMode
                   ? "hover:bg-gray-800"
                   : "hover:bg-gray-200"

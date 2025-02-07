@@ -58,7 +58,7 @@ type Note = {
   return (
     <div className="flex col-span-4 row-span-12 border border-t-0 border-r-0">
       <div className="w-1/4 active:outline-none p-4">
-       <h1 className="text-2xl font-bold pb-4">Archived Notes</h1>
+       <h1 className="text-xl font-bold pb-4">Archived Notes</h1>
         <div>
           {archive.map((note, index) => (
             <div

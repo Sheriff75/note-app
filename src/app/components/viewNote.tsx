@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { MdCancel } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaClock,FaTag } from "react-icons/fa";
 import DeleteNoteModal from "./deleteModal";
 import { useContext } from "react";
 import { NoteContext } from "../contexts/noteProvider";
@@ -89,8 +89,8 @@ const ViewNote: React.FC<ViewNoteProps> = ({
         <h1 className="text-3xl font-semibold capitalize ">
           {selectedNote.title}
         </h1>
-        <span className="flex items-center gap-1">
-          Tags:
+        <span className="flex items-center gap-10 mt-2">
+         <span className="flex gap-1 items-center text-lg"><FaTag className="text-sm"/> Tags</span>
           {selectedNote.tags.map(
             (tag: string, index: number) => {
               return (
@@ -108,7 +108,9 @@ const ViewNote: React.FC<ViewNoteProps> = ({
             }
           )}
         </span>
-        <h2>{selectedNote.date}</h2>
+        <h2 className="mt-2 flex gap-10">
+        <span className="flex gap-1 items-center text-lg"><FaClock className="text-md"/>Last edited</span>
+           {selectedNote.date}</h2>
       </div>
       <div className="px-4">
         <p className="text-lg font-medium ">

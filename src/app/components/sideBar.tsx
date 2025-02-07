@@ -61,14 +61,14 @@ const SideBar = () => {
   }, [notes, setTags]);
 
   return (
-    <div className="py-5 px-4 col-span-1 row-span-11  ">
+    <div className="py-5 px-4 col-span-1 row-span-12 row-start-1  ">
       <span className="flex text-3xl">
         <GiQuillInk /> <h1>notes</h1>
       </span>
       <ul className="mt-4 border-b-2">
         <Link href={"/"}>
           <li
-            className={`py-2 flex px-2 gap-2 items-center ${
+            className={`py-2 flex px-2 gap-2  text-lg font-semibold items-center ${
               darkMode
                 ? "hover:bg-gray-800"
                 : "hover:bg-gray-200"
@@ -79,7 +79,7 @@ const SideBar = () => {
         </Link>
         <Link href={"/archive"}>
           <li
-            className={`py-2 flex px-2 gap-2 items-center mb-1 ${
+            className={` py-2 flex px-2 gap-2 text-lg font-semibold items-center mb-1 ${
               darkMode
                 ? "hover:bg-gray-800"
                 : "hover:bg-gray-200"
