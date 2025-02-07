@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useContext } from "react";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../contexts/noteProvider";
 import Header from "./components/header";
 import SideBar from "./components/sideBar";
 import Main from "./components/Main";

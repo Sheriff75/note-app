@@ -10,7 +10,7 @@ import {
   FaAngleDown,
 } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../contexts/noteProvider";
 import { v4 as uuid } from "uuid";
 
 interface AddNotesProps {

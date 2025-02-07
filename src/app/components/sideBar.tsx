@@ -2,7 +2,7 @@
 "use client";
 import Link  from "next/link";
 import { useContext, useEffect } from "react";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../contexts/noteProvider";
 import React from "react";
 import { GiQuillInk } from "react-icons/gi";
 import { BiHome } from "react-icons/bi";

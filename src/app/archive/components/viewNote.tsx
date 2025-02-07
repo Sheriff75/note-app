@@ -4,7 +4,7 @@ import { MdCancel } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import DeleteNoteModal from "./deleteModal";
 import { useContext } from "react";
-import { NoteContext } from "../../layout";
+import { NoteContext } from "../../contexts/noteProvider";
 
 interface Note {
   id: string;

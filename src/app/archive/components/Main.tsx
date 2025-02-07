@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import ViewNote from "../components/viewNote";
 import { useContext } from "react";
-import { NoteContext } from "../../layout";
+import { NoteContext } from "../../contexts/noteProvider";
 
 type Note = {
   id: string;

@@ -5,7 +5,7 @@ import React, {
   useEffect,
 } from "react";
 import { CiSettings } from "react-icons/ci";
-import { NoteContext } from "../../layout";
+import { NoteContext } from "../../contexts/noteProvider";
 import Settings from "./Settings";
 
 type Note = {

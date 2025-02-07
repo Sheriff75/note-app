@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext } from "react";
 import { MdCancel } from "react-icons/md";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../contexts/noteProvider";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 const Settings = () => {
