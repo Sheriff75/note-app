@@ -61,7 +61,7 @@ const SideBar = () => {
   }, [notes, setTags]);
 
   return (
-    <div className="py-10 px-4  w-[20vw] h-fit min-h-screen ">
+    <div className="py-10 px-4 col-span-1 row-span-11  ">
       <span className="flex text-3xl">
         <GiQuillInk /> <h1>notes</h1>
       </span>

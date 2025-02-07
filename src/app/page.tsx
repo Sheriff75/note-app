@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import SideBar from "./components/sideBar";
-import Main from "./components/Main";
-import { BrowserRouter } from "react-router-dom";
+import Main from './components/Main';
+import Header from './components/header';
+import SideBar from './components/sideBar';
 
-export default function Home() {
+import React from 'react'
+
+const Home = () => {
   return (
-    <div className="flex ">
-      <BrowserRouter>
-        <SideBar />
-        <Main />
-      </BrowserRouter>
+    <div className='grid grid-cols-5 grid-rows-12 h-screen'>
+    <Header/>
+    <SideBar/>
+    <Main/>
     </div>
-  );
+  )
 }
+
+export default Home
+
+
