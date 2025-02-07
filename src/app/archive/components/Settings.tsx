@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext } from "react";
 import { MdCancel } from "react-icons/md";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../../layout";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 const Settings = () => {
@@ -44,7 +44,7 @@ const Settings = () => {
       />
 
       <h1 className="text-xl my-2 font-semibold">Select Theme </h1>
-      <button onClick={()=> setDarkMode(!darkMode)} className="border cursor-pointer rounded-full text-2xl p-2">
+      <button onClick={()=> setDarkMode(!darkMode)} className="border rounded-full cursor-pointer text-2xl p-2">
         {
         darkMode ? <FaSun/> : <FaMoon/>
         }

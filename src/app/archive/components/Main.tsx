@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useState,
-  useEffect,
 } from "react";
-import { BiPlus } from "react-icons/bi";
-import AddNotes from "../components/addNotes";
 import ViewNote from "../components/viewNote";
 import { useContext } from "react";
-import { NoteContext } from "../layout";
+import { NoteContext } from "../../layout";
 
 type Note = {
   id: string;
@@ -19,7 +16,6 @@ type Note = {
  const Main = () => {
   const [isCreate, setIsCreate] = useState(false);
 
-  const [date, setDate] = useState<string>("");
   const {
     notes,
     darkMode,
@@ -58,24 +54,11 @@ type Note = {
     >;
   }>(NoteContext);
 
-  useEffect(() => {
-    const formattedDate =
-      new Date().toLocaleDateString();
-    setDate(formattedDate);
-  }, [isCreate]);
 
   return (
     <div className="flex col-span-4 row-span-12 border border-t-0 border-r-0">
-      <div className="w-1/4 active:outline-none p-3">
-        <button
-          className="flex items-center bg-sky-600 mb-3 text-white p-2 rounded-md w-full justify-center font-bold"
-          onClick={() => setIsCreate(true)}
-        >
-          {" "}
-          <BiPlus />
-          Create new note
-        </button>
-        <h1 className="text-2xl font-bold pb-4">All Notes</h1>
+      <div className="w-1/4 active:outline-none p-4">
+       <h1 className="text-2xl font-bold pb-4">Archived Notes</h1>
         <div>
           {notes.map((note, index) => (
             <div
@@ -85,7 +68,7 @@ type Note = {
                 setIsCreate(false);
               }}
               key={index}
-              className={`flex flex-col p-1  hover:cursor-pointer mt-1 rounded-lg ${
+              className={`flex flex-col p-2 border hover:cursor-pointer mt-1 rounded-lg ${
                 darkMode
                   ? "hover:bg-gray-800"
                   : "hover:bg-gray-200"
@@ -118,7 +101,6 @@ type Note = {
               <p className="text-sm">
                 {note.date}
               </p>
-              <hr />
             </div>
           ))}
         </div>
@@ -131,12 +113,6 @@ type Note = {
               new note.
             </h1>
           </div>
-        )}
-        {isCreate && (
-          <AddNotes
-            date={date}
-            setIsCreate={setIsCreate}
-          />
         )}
         {isViewNote && (
           <ViewNote

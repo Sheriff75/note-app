@@ -2,6 +2,9 @@
 "use client";
 import { useContext } from "react";
 import { NoteContext } from "../layout";
+import Header from "./components/header";
+import SideBar from "./components/sideBar";
+import Main from "./components/Main";
 
 import React from "react";
 
@@ -45,8 +48,10 @@ const Archive = () => {
     >;
   }>(NoteContext);
   return( 
-  <div className="h-fit min-h-[87.9vh] p-4 border-x)">
-    Archive
+    <div className='grid grid-cols-5 grid-rows-12 h-screen'>
+    <Header/>
+    <SideBar/>
+    <Main/>
     </div>);
 };
 
