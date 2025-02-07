@@ -26,6 +26,8 @@ export const NoteContext = createContext<{
   setIsViewNote: Dispatch<
     SetStateAction<boolean>
   >;
+  archive: Note[];
+  setArchive: Dispatch<SetStateAction<Note[]>>;
 }>({
   notes: [],
   setNotes: () => {},
@@ -45,6 +47,8 @@ export const NoteContext = createContext<{
   setSelectedNote: () => {},
   isViewNote: false,
   setIsViewNote: () => {},
+  archive: [],
+  setArchive: () => {}
 });
 
 type Note = {
@@ -72,6 +76,11 @@ export default function RootLayout({
         localStorage.getItem("tags") || "[]"
       )
     : [];
+    const initialArchive = localStorage.getItem("archive")
+    ? JSON.parse(
+        localStorage.getItem("archive") || "[]"
+      )
+    : [];
 
   const [notes, setNotes] =
     useState<any[]>(initialNotes);
@@ -83,6 +92,7 @@ export default function RootLayout({
     useState<boolean>(false);
   const [isViewNote, setIsViewNote] =
     useState(false);
+  const [archive,setArchive] = useState<Note[]>(initialArchive)
 
   const [selectedNote, setSelectedNote] =
     useState<Note>({
@@ -122,6 +132,8 @@ export default function RootLayout({
           setSelectedNote,
           isViewNote,
           setIsViewNote,
+          archive,
+          setArchive
         }}
       >
         <body

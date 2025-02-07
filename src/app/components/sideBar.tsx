@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { Link } from "react-router-dom";
-import { useContext,useEffect } from "react";
+import Link  from "next/link";
+import { useContext, useEffect } from "react";
 import { NoteContext } from "../layout";
 import React from "react";
 import { GiQuillInk } from "react-icons/gi";
@@ -18,7 +18,7 @@ interface Note {
 }
 
 const SideBar = () => {
-  const { tags, darkMode, notes,setTags } =
+  const { tags, darkMode, notes, setTags } =
     useContext<{
       notes: any[];
       setNotes: React.Dispatch<
@@ -44,15 +44,21 @@ const SideBar = () => {
       setIsViewNote: React.Dispatch<
         React.SetStateAction<boolean>
       >;
+      archive: Note[];
+      setArchive: React.Dispatch<
+        React.SetStateAction<Note[]>
+      >;
     }>(NoteContext);
 
-useEffect(()=>{
-  const usedTags = new Set<string>();
-  notes.forEach((note) => {
-    note.tags.forEach((tag:string) => usedTags.add(tag));
-  });
-  setTags(Array.from(usedTags))
-},[notes])
+  useEffect(() => {
+    const usedTags = new Set<string>();
+    notes.forEach((note) => {
+      note.tags.forEach((tag: string) =>
+        usedTags.add(tag)
+      );
+    });
+    setTags(Array.from(usedTags));
+  }, [notes, setTags]);
 
   return (
     <div className="py-10 px-4  w-[20vw] h-fit min-h-screen ">
@@ -60,7 +66,7 @@ useEffect(()=>{
         <GiQuillInk /> <h1>notes</h1>
       </span>
       <ul className="mt-4 border-b-2">
-        <Link to={"/"}>
+        <Link href={"/"}>
           <li
             className={`py-2 flex px-2 gap-2 items-center ${
               darkMode
@@ -71,7 +77,7 @@ useEffect(()=>{
             <BiHome /> All Notes
           </li>
         </Link>
-        <Link to={"/archive"}>
+        <Link href={"/archive"}>
           <li
             className={`py-2 flex px-2 gap-2 items-center mb-1 ${
               darkMode

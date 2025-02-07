@@ -15,7 +15,7 @@ button {
     background-color: black;
 
     * {
-        border-color: white !important;
+        border-color: gray !important;
 
     }
     input,textarea{

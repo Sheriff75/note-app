@@ -22,13 +22,11 @@ interface ViewNoteProps {
   >;
 }
 
-
-
 const ViewNote: React.FC<ViewNoteProps> = ({
   selectedNote,
   setIsViewNote,
 }) => {
-  const { darkMode, notes, setNotes } =
+  const { darkMode, notes, setNotes,setArchive,archive } =
     useContext<{
       notes: any[];
       setNotes: React.Dispatch<
@@ -54,14 +52,21 @@ const ViewNote: React.FC<ViewNoteProps> = ({
       setIsViewNote: React.Dispatch<
         React.SetStateAction<boolean>
       >;
+      archive: Note[];
+      setArchive: React.Dispatch<
+        React.SetStateAction<Note[]>
+      >;
     }>(NoteContext);
   const [isDelete, setIsDelete] = useState(false);
 
-
-  console.log(notes);
+  const addToArchive =() =>{
+    setArchive([...archive,selectedNote])
+    setNotes(notes.filter(item => item.id !== selectedNote.id))
+    setIsViewNote(false)
+  }
 
   return (
-    <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-[86.9vh]">
+    <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-[87.9vh]">
       <div className="absolute right-5 top-5 flex items-center gap-2 text-xl">
         <MdCancel
           size={30}
@@ -72,7 +77,9 @@ const ViewNote: React.FC<ViewNoteProps> = ({
           className="cursor-pointer "
           onClick={() => setIsDelete(true)}
         />
-        <BiArchiveIn className="cursor-pointer " />
+        <BiArchiveIn className="cursor-pointer " onClick={()=>{
+          addToArchive()
+        }}/>
       </div>
       <div className="border-b">
         <h1 className="text-3xl font-semibold capitalize ">
@@ -104,7 +111,15 @@ const ViewNote: React.FC<ViewNoteProps> = ({
           {selectedNote.content}
         </p>
       </div>
-      {isDelete && <DeleteNoteModal selectedNote={selectedNote} setIsDelete={setIsDelete} setIsViewNote={setIsViewNote} setNotes={setNotes} notes={notes} />}
+      {isDelete && (
+        <DeleteNoteModal
+          selectedNote={selectedNote}
+          setIsDelete={setIsDelete}
+          setIsViewNote={setIsViewNote}
+          setNotes={setNotes}
+          notes={notes}
+        />
+      )}
     </div>
   );
 };

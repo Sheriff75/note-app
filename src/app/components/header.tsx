@@ -23,44 +23,57 @@ const Header = () => {
     useState<boolean>(false);
   const [filteredNotes, setFilteredNotes] =
     useState<any[]>([]);
-  const { settings, setSettings, notes,setSelectedNote,setIsViewNote } =
-    useContext<{
-            notes: any[];
-            setNotes: React.Dispatch<
-              React.SetStateAction<any[]>
-            >;
-            settings: boolean;
-            tags: string[];
-            setSettings: React.Dispatch<
-              React.SetStateAction<boolean>
-            >;
-            setTags: React.Dispatch<
-              React.SetStateAction<string[]>
-            >;
-            darkMode: boolean;
-            setDarkMode: React.Dispatch<
-              React.SetStateAction<boolean>
-            >;
-              selectedNote: Note;
-              setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-            isViewNote: boolean;
-            setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-    }>(NoteContext);
+  const {
+    settings,
+    setSettings,
+    notes,
+    setSelectedNote,
+    setIsViewNote,
+  } = useContext<{
+    notes: any[];
+    setNotes: React.Dispatch<
+      React.SetStateAction<any[]>
+    >;
+    settings: boolean;
+    tags: string[];
+    setSettings: React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
+    setTags: React.Dispatch<
+      React.SetStateAction<string[]>
+    >;
+    darkMode: boolean;
+    setDarkMode: React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
+    selectedNote: Note;
+    setSelectedNote: React.Dispatch<
+      React.SetStateAction<Note>
+    >;
+    isViewNote: boolean;
+    setIsViewNote: React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
+    archive: Note[];
+    setArchive: React.Dispatch<
+      React.SetStateAction<Note[]>
+    >;
+  }>(NoteContext);
 
-  const checkSearch = (item: any) => {
-    return (
-      item.title.toUpperCase().includes(search) ||
-      item.tags.some((tag: string) =>
-        tag.toUpperCase().includes(search)
-      )
-    );
-  };
 
   useEffect(() => {
+    const checkSearch = (item: any) => {
+      return (
+        item.title.toUpperCase().includes(search) ||
+        item.tags.some((tag: string) =>
+          tag.toUpperCase().includes(search)
+        )
+      );
+    };
+  
     setFilteredNotes(notes.filter(checkSearch));
-  }, [search]);
+  }, [search, notes]);
 
-  console.log(filteredNotes);
   return (
     <div
       className={
@@ -70,9 +83,10 @@ const Header = () => {
       <h1 className="font-extrabold">
         All Notes
       </h1>
-      <div className="flex items-center gap-1 relative"
-          onBlur={() => setPreview(false)}
-          >
+      <div
+        className="flex items-center gap-1 relative"
+        onBlur={() => setPreview(false)}
+      >
         <input
           type="text"
           placeholder="Search notes"
@@ -87,16 +101,21 @@ const Header = () => {
           }}
         />
         {preview && (
-          <div className="absolute top-12 left-2 bg-white h-fit p-4 rounded-lg w-60 shadow-[1px_2px_5px_gray]"
-          onMouseOver={
-            ()=> setPreview(true)
-          }
+          <div
+            className="absolute top-12 left-2 bg-white h-fit p-4 rounded-lg w-60 shadow-[1px_2px_5px_gray]"
+            onMouseOver={() => setPreview(true)}
           >
             {filteredNotes.map(
               (note: any, index: number) => (
-                <p key={index}
-                onClick={() => {setSelectedNote(note); setIsViewNote(true);}}
-                >{note.title}</p>
+                <p
+                  key={index}
+                  onClick={() => {
+                    setSelectedNote(note);
+                    setIsViewNote(true);
+                  }}
+                >
+                  {note.title}
+                </p>
               )
             )}
           </div>

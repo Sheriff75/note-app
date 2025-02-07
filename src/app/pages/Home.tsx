@@ -11,20 +11,25 @@ import ViewNote from "../components/viewNote";
 import { useContext } from "react";
 import { NoteContext } from "../layout";
 
-
-
 type Note = {
   id: string;
   title: string;
   tags: string[];
   date: string;
-  content:string;
+  content: string;
 };
 const Home = () => {
   const [isCreate, setIsCreate] = useState(false);
 
   const [date, setDate] = useState<string>("");
-  const { notes, darkMode,selectedNote,setSelectedNote,isViewNote,setIsViewNote } = useContext<{
+  const {
+    notes,
+    darkMode,
+    selectedNote,
+    setSelectedNote,
+    isViewNote,
+    setIsViewNote,
+  } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<
       React.SetStateAction<any[]>
@@ -41,10 +46,18 @@ const Home = () => {
     setDarkMode: React.Dispatch<
       React.SetStateAction<boolean>
     >;
-      selectedNote: Note;
-      setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+    selectedNote: Note;
+    setSelectedNote: React.Dispatch<
+      React.SetStateAction<Note>
+    >;
     isViewNote: boolean;
-    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsViewNote: React.Dispatch<
+      React.SetStateAction<boolean>
+    >;
+    archive: Note[];
+    setArchive: React.Dispatch<
+      React.SetStateAction<Note[]>
+    >;
   }>(NoteContext);
 
   useEffect(() => {
@@ -67,12 +80,11 @@ const Home = () => {
         <div>
           {notes.map((note, index) => (
             <div
-            onClick={
-              () => {setIsViewNote(true)
-                setSelectedNote(note)
-                setIsCreate(false)
-              }
-            }
+              onClick={() => {
+                setIsViewNote(true);
+                setSelectedNote(note);
+                setIsCreate(false);
+              }}
               key={index}
               className={`flex flex-col p-1  hover:cursor-pointer mt-1 rounded-lg ${
                 darkMode
@@ -114,7 +126,7 @@ const Home = () => {
       </div>
       <div className="w-3/4 h-[100%]">
         {!isCreate && !isViewNote && (
-          <div className="flex justify-center items-center h-[86.9vh] border border-t-0">
+          <div className="flex justify-center items-center h-[87.9vh] border border-t-0 border-b-0">
             <h1 className="text-2xl text-gray-400">
               Select a note to view or create a
               new note.
@@ -127,11 +139,12 @@ const Home = () => {
             setIsCreate={setIsCreate}
           />
         )}
-        {
-          isViewNote && (
-            <ViewNote selectedNote={selectedNote}  setIsViewNote={setIsViewNote}/>
-          )
-        }
+        {isViewNote && (
+          <ViewNote
+            selectedNote={selectedNote}
+            setIsViewNote={setIsViewNote}
+          />
+        )}
       </div>
     </div>
   );
