@@ -87,7 +87,11 @@ const AddNotes: React.FC<AddNotesProps> = ({
   };
 
   const updateGlobalTags = () => {
-    setTags([...new Set([...tags, ...tagToAdd])]);
+      const usedTags = new Set<string>();
+      notes.forEach((note) => {
+        note.tags.forEach((tag:string) => usedTags.add(tag));
+      });
+    setTags([...new Set([...usedTags, ...tagToAdd])]);
   };
 
   function handleCreateNote() {
