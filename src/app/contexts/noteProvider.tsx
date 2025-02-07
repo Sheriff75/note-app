@@ -60,25 +60,37 @@ export const NoteProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const initialNotes = localStorage.getItem(
-    "notes"
-  )
-    ? JSON.parse(
-        localStorage.getItem("notes") || "[]"
-      )
-    : [];
-  const initialTags = localStorage.getItem("tags")
-    ? JSON.parse(
-        localStorage.getItem("tags") || "[]"
-      )
-    : [];
-  const initialArchive = localStorage.getItem(
-    "archive"
-  )
-    ? JSON.parse(
-        localStorage.getItem("archive") || "[]"
-      )
-    : [];
+  const [initialNotes, setInitialNotes] =
+    useState<any[]>([]);
+  const [initialTags, setInitialTags] = useState<
+    string[]
+  >([]);
+  const [initialArchive, setInitialArchive] =
+    useState<Note[]>([]);
+  useEffect(() => {
+    setInitialNotes(
+      localStorage.getItem("notes")
+        ? JSON.parse(
+            localStorage.getItem("notes") || "[]"
+          )
+        : []
+    );
+    setInitialTags(
+      localStorage.getItem("tags")
+        ? JSON.parse(
+            localStorage.getItem("tags") || "[]"
+          )
+        : []
+    );
+    setInitialArchive(
+      localStorage.getItem("archive")
+        ? JSON.parse(
+            localStorage.getItem("archive") ||
+              "[]"
+          )
+        : []
+    );
+  }, []);
 
   const [notes, setNotes] =
     useState<any[]>(initialNotes);
