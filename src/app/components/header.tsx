@@ -77,7 +77,7 @@ const Header = () => {
   return (
     <div
       className={
-        "border border-t-0  w-full relative p-4 px-10 items-center flex justify-between max-h-[13vh] col-span-full"
+        "border w-full relative p-4 px-10 items-center flex justify-between max-h-[13vh] col-span-full"
       }
     >
       <h1 className="font-bold text-2xl">
