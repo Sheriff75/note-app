@@ -16,7 +16,7 @@ type Note = {
   date: string;
   content: string;
 };
- const Main = () => {
+const Main = () => {
   const [isCreate, setIsCreate] = useState(false);
 
   const [date, setDate] = useState<string>("");
@@ -75,8 +75,15 @@ type Note = {
           <BiPlus />
           Create new note
         </button>
-        <h1 className="text-2xl font-bold pb-4">All Notes</h1>
+        <h1 className="text-2xl font-bold pb-4">
+          All Notes
+        </h1>
         <div>
+          {notes.length === 0 && (
+            <h1 className="text-xl text-center font-semibold text-gray-400 mt-4">
+              You have no saved notes
+            </h1>
+          )}
           {notes.map((note, index) => (
             <div
               onClick={() => {
@@ -149,4 +156,4 @@ type Note = {
   );
 };
 
-export default  Main
+export default Main;

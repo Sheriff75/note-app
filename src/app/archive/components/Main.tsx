@@ -17,7 +17,7 @@ type Note = {
   const [isCreate, setIsCreate] = useState(false);
 
   const {
-    notes,
+    archive,
     darkMode,
     selectedNote,
     setSelectedNote,
@@ -60,7 +60,7 @@ type Note = {
       <div className="w-1/4 active:outline-none p-4">
        <h1 className="text-2xl font-bold pb-4">Archived Notes</h1>
         <div>
-          {notes.map((note, index) => (
+          {archive.map((note, index) => (
             <div
               onClick={() => {
                 setIsViewNote(true);

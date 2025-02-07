@@ -5,7 +5,6 @@ import { FaTrash } from "react-icons/fa";
 import DeleteNoteModal from "./deleteModal";
 import { useContext } from "react";
 import { NoteContext } from "../../layout";
-import { BiArchiveIn } from "react-icons/bi";
 
 interface Note {
   id: string;
@@ -26,7 +25,7 @@ const ViewNote: React.FC<ViewNoteProps> = ({
   selectedNote,
   setIsViewNote,
 }) => {
-  const { darkMode, notes, setNotes,setArchive,archive } =
+  const { darkMode, notes, setNotes, } =
     useContext<{
       notes: any[];
       setNotes: React.Dispatch<
@@ -59,11 +58,7 @@ const ViewNote: React.FC<ViewNoteProps> = ({
     }>(NoteContext);
   const [isDelete, setIsDelete] = useState(false);
 
-  const addToArchive =() =>{
-    setArchive([...archive,selectedNote])
-    setNotes(notes.filter(item => item.id !== selectedNote.id))
-    setIsViewNote(false)
-  }
+
 
   return (
     <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-[87.9vh]">
@@ -77,9 +72,6 @@ const ViewNote: React.FC<ViewNoteProps> = ({
           className="cursor-pointer "
           onClick={() => setIsDelete(true)}
         />
-        <BiArchiveIn className="cursor-pointer " onClick={()=>{
-          addToArchive()
-        }}/>
       </div>
       <div className="border-b">
         <h1 className="text-3xl font-semibold capitalize ">

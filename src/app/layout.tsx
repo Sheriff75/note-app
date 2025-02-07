@@ -115,6 +115,12 @@ export default function RootLayout({
       JSON.stringify(tags)
     );
   }, [tags]);
+  useEffect(() => {
+    localStorage.setItem(
+      "archive",
+      JSON.stringify(archive)
+    );
+  }, [archive]);
 
   return (
     <html lang="en">
