@@ -63,6 +63,10 @@ const ViewNote: React.FC<ViewNoteProps> = ({
     setArchive([...archive,selectedNote])
     setNotes(notes.filter(item => item.id !== selectedNote.id))
     setIsViewNote(false)
+    localStorage.setItem(
+      "archive",
+      JSON.stringify(archive)
+    )
   }
 
   return (

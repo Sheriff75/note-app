@@ -60,24 +60,25 @@ const Header = () => {
     >;
   }>(NoteContext);
 
-
   useEffect(() => {
     const checkSearch = (item: any) => {
       return (
-        item.title.toUpperCase().includes(search) ||
+        item.title
+          .toUpperCase()
+          .includes(search) ||
         item.tags.some((tag: string) =>
           tag.toUpperCase().includes(search)
         )
       );
     };
-  
+
     setFilteredNotes(notes.filter(checkSearch));
   }, [search, notes]);
 
   return (
     <div
       className={
-        "border  w-full relative p-4 px-10 items-center flex justify-between max-h-[13vh] col-span-full"
+        "border  w-full relative p-6 px-10 items-center flex justify-between max-h-[13vh] col-span-full"
       }
     >
       <h1 className="font-bold text-2xl">
