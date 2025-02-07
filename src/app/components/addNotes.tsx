@@ -113,7 +113,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
   console.log(notes)
   return (
     <div className="flex flex-col pt-5 gap-2 border-gray-400 items-center border border-t-0 h-full">
-      <h1 className="text-3xl font-semibold ">
+      <h1 className="text-3xl capitalize font-semibold ">
         Create a new note
       </h1>
       <input

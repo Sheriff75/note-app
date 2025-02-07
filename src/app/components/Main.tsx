@@ -68,19 +68,20 @@ const Main = () => {
     <div className="flex col-span-4 row-span-12 border border-t-0 border-r-0">
       <div className="w-1/4 active:outline-none p-3">
         <button
-          className="flex items-center bg-sky-600 mb-3 text-white p-2 rounded-md w-full justify-center font-bold"
+          className="flex items-center bg-sky-600 mb-3 text-white p-3 rounded-md w-full justify-center font-bold"
           onClick={() => setIsCreate(true)}
         >
           {" "}
           <BiPlus />
           Create new note
         </button>
-        <h1 className="text-2xl font-bold pb-4">
+        <hr />
+        <h1 className="text-2xl font-bold pt-4 text-center">
           All Notes
         </h1>
         <div>
           {notes.length === 0 && (
-            <h1 className="text-xl text-center font-semibold text-gray-400 mt-4">
+            <h1 className="text-xl text-center font-semibold text-gray-400 mt-2">
               You have no saved notes
             </h1>
           )}
