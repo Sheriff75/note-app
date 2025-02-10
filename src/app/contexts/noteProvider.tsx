@@ -60,51 +60,42 @@ export const NoteProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [initialNotes, setInitialNotes] =
-    useState<any[]>([]);
-  const [initialTags, setInitialTags] = useState<
-    string[]
-  >([]);
-  const [initialArchive, setInitialArchive] =
-    useState<Note[]>([]);
-  useEffect(() => {
-    setInitialNotes(
-      localStorage.getItem("notes")
-        ? JSON.parse(
-            localStorage.getItem("notes") || "[]"
-          )
-        : []
-    );
-    setInitialTags(
-      localStorage.getItem("tags")
-        ? JSON.parse(
-            localStorage.getItem("tags") || "[]"
-          )
-        : []
-    );
-    setInitialArchive(
-      localStorage.getItem("archive")
-        ? JSON.parse(
-            localStorage.getItem("archive") ||
-              "[]"
-          )
-        : []
-    );
-  }, []);
+  const loadNotes = () => {
+    const storedNotes =
+      localStorage.getItem("notes");
+    return storedNotes
+      ? JSON.parse(storedNotes || "[]")
+      : [];
+  };
+  const loadTags = () => {
+    const storedTags =
+      localStorage.getItem("tags");
+    return storedTags
+      ? JSON.parse(storedTags || "[]")
+      : [];
+  };
+  const loadArchive = () => {
+    const storedArchive =
+      localStorage.getItem("archive");
+    return storedArchive
+      ? JSON.parse(storedArchive || "[]")
+      : [];
+  };
 
-  const [notes, setNotes] =
-    useState<any[]>(initialNotes);
+  const [notes, setNotes] = useState<Note[]>(
+    loadNotes()
+  );
   const [tags, setTags] =
-    useState<string[]>(initialTags);
+    useState<string[]>(loadTags());
+  const [archive, setArchive] = useState<Note[]>(
+    loadArchive()
+  );
   const [darkMode, setDarkMode] =
     useState<boolean>(false);
   const [settings, setSettings] =
     useState<boolean>(false);
   const [isViewNote, setIsViewNote] =
     useState<boolean>(false);
-  const [archive, setArchive] = useState<Note[]>(
-    initialArchive
-  );
 
   const [selectedNote, setSelectedNote] =
     useState<Note>({
@@ -114,6 +105,7 @@ export const NoteProvider = ({
       date: "",
       content: "",
     });
+
   useEffect(() => {
     localStorage.setItem(
       "notes",

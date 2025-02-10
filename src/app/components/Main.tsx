@@ -80,7 +80,7 @@ const Main = () => {
           Create new note
         </button>
         <hr />
-        <h1 className="text-2xl font-bold pt-4 px-1 border-b">
+        <h1 className="text-2xl fonarchivet-bold pt-4 px-1 border-b">
           All Notes
         </h1>
         <div>
