@@ -68,10 +68,8 @@ export const NoteProvider = ({
       : [];
   };
   const loadTags = () => {
-    const storedTags =
-      localStorage.getItem("tags");
-    return storedTags
-      ? JSON.parse(storedTags || "[]")
+    const storedTags = localStorage.getItem("tags");
+    return storedTags ? JSON.parse(storedTags || "[]")
       : [];
   };
   const loadArchive = () => {
