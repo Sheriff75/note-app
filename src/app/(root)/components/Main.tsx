@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { BiPlus } from "react-icons/bi";
-import AddNotes from "../components/addNotes";
-import ViewNote from "../components/viewNote";
+import AddNotes from "./addNotes";
+import ViewNote from "./viewNote";
 import { useContext } from "react";
 import { NoteContext } from "../contexts/noteProvider";
 
@@ -29,42 +26,27 @@ const Main = () => {
     setIsViewNote,
   } = useContext<{
     notes: any[];
-    setNotes: React.Dispatch<
-      React.SetStateAction<any[]>
-    >;
+    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
     settings: boolean;
     tags: string[];
-    setSettings: React.Dispatch<
-      React.SetStateAction<boolean>
-    >;
-    setTags: React.Dispatch<
-      React.SetStateAction<string[]>
-    >;
+    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
     darkMode: boolean;
-    setDarkMode: React.Dispatch<
-      React.SetStateAction<boolean>
-    >;
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
     selectedNote: Note;
-    setSelectedNote: React.Dispatch<
-      React.SetStateAction<Note>
-    >;
+    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
     isViewNote: boolean;
-    setIsViewNote: React.Dispatch<
-      React.SetStateAction<boolean>
-    >;
+    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
     archive: Note[];
-    setArchive: React.Dispatch<
-      React.SetStateAction<Note[]>
-    >;
+    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
   }>(NoteContext);
 
   useEffect(() => {
-    const formattedDate =
-      new Date().toLocaleDateString("en-US", {  
-        year: "numeric",  
-        month: "long",  
-        day: "numeric"  
-      });  ;
+    const formattedDate = new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
     setDate(formattedDate);
   }, [isCreate]);
 
@@ -98,38 +80,25 @@ const Main = () => {
               }}
               key={index}
               className={`flex flex-col p-2  hover:cursor-pointer mt-1 rounded-lg ${
-                darkMode
-                  ? "hover:bg-gray-800"
-                  : "hover:bg-gray-200"
+                darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
               } `}
             >
-              <h1 className="text-lg  capitalize truncate">
-                {note.title}
-              </h1>
+              <h1 className="text-lg  capitalize truncate">{note.title}</h1>
               <div className="flex gap-2 flex-wrap">
-                {note.tags.map(
-                  (
-                    tag: string,
-                    index: number
-                  ) => {
-                    return (
-                      <span
-                        key={index}
-                        className={`w-fit px-1 text-md capitalize rounded-md my-1 ${
-                          darkMode
-                            ? "text-white bg-gray-700"
-                            : "bg-gray-300"
-                        }`}
-                      >
-                        {tag}
-                      </span>
-                    );
-                  }
-                )}
+                {note.tags.map((tag: string, index: number) => {
+                  return (
+                    <span
+                      key={index}
+                      className={`w-fit px-1 text-md capitalize rounded-md my-1 ${
+                        darkMode ? "text-white bg-gray-700" : "bg-gray-300"
+                      }`}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
               </div>
-              <p className="text-sm">
-                {note.date}
-              </p>
+              <p className="text-sm">{note.date}</p>
               <hr />
             </div>
           ))}
@@ -139,22 +108,13 @@ const Main = () => {
         {!isCreate && !isViewNote && (
           <div className="flex justify-center items-center h-full border border-t-0 border-b-0">
             <h1 className="text-2xl text-gray-400">
-              Select a note to view or create a
-              new note.
+              Select a note to view or create a new note.
             </h1>
           </div>
         )}
-        {isCreate && (
-          <AddNotes
-            date={date}
-            setIsCreate={setIsCreate}
-          />
-        )}
+        {isCreate && <AddNotes date={date} setIsCreate={setIsCreate} />}
         {isViewNote && (
-          <ViewNote
-            selectedNote={selectedNote}
-            setIsViewNote={setIsViewNote}
-          />
+          <ViewNote selectedNote={selectedNote} setIsViewNote={setIsViewNote} />
         )}
       </div>
     </div>

@@ -1,25 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, {
-  useState,
-  useContext,
-} from "react";
-import {
-  FaTag,
-  FaAngleRight,
-  FaAngleDown,
-} from "react-icons/fa";
+import React, { useState, useContext } from "react";
+import { FaTag, FaAngleRight, FaAngleDown } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { NoteContext } from "../contexts/noteProvider";
 import { v4 as uuid } from "uuid";
 
 interface AddNotesProps {
   date: string;
-  setIsCreate: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
+  setIsCreate: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 
 interface Note {
   id: string;
@@ -29,53 +19,30 @@ interface Note {
   content: string;
 }
 
-const AddNotes: React.FC<AddNotesProps> = ({
-  date,
-  setIsCreate,
-}) => {
+const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate }) => {
   const [title, setTitle] = useState<string>("");
-  const [content, setContent] =
-    useState<string>("");
+  const [content, setContent] = useState<string>("");
 
-  const [addTags, setAddTags] =
-    useState<boolean>(false);
-  const [showTags, setShowTags] =
-    useState<boolean>(false);
-  const [currentTag, setCurrentTag] =
-    useState<string>("");
-  const [tagToAdd, setTagToAdd] = useState<
-    string[]
-  >([]);
+  const [addTags, setAddTags] = useState<boolean>(false);
+  const [showTags, setShowTags] = useState<boolean>(false);
+  const [currentTag, setCurrentTag] = useState<string>("");
+  const [tagToAdd, setTagToAdd] = useState<string[]>([]);
 
-  const {
-    notes,
-    setNotes,
-    tags,
-    setTags,
-    darkMode,
-  } = useContext<{
-     notes: any[];
-        setNotes: React.Dispatch<
-          React.SetStateAction<any[]>
-        >;
-        settings: boolean;
-        tags: string[];
-        setSettings: React.Dispatch<
-          React.SetStateAction<boolean>
-        >;
-        setTags: React.Dispatch<
-          React.SetStateAction<string[]>
-        >;
-        darkMode: boolean;
-        setDarkMode: React.Dispatch<
-          React.SetStateAction<boolean>
-        >;
-          selectedNote: Note;
-          setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-        isViewNote: boolean;
-        setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-        archive: Note[];
-        setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
+  const { notes, setNotes, tags, setTags, darkMode } = useContext<{
+    notes: any[];
+    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    settings: boolean;
+    tags: string[];
+    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
+    darkMode: boolean;
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedNote: Note;
+    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+    isViewNote: boolean;
+    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
+    archive: Note[];
+    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
   }>(NoteContext);
 
   const handleAddTag = () => {
@@ -89,15 +56,15 @@ const AddNotes: React.FC<AddNotesProps> = ({
   };
 
   const updateGlobalTags = () => {
-      const usedTags = new Set<string>();
-      notes.forEach((note) => {
-        note.tags.forEach((tag:string) => usedTags.add(tag));
-      });
+    const usedTags = new Set<string>();
+    notes.forEach((note) => {
+      note.tags.forEach((tag: string) => usedTags.add(tag));
+    });
     setTags([...new Set([...usedTags, ...tagToAdd])]);
   };
 
   function handleCreateNote() {
-    const id = uuid()
+    const id = uuid();
     setNotes([
       ...notes,
       {
@@ -110,21 +77,15 @@ const AddNotes: React.FC<AddNotesProps> = ({
     ]);
   }
 
-  console.log(notes)
+  console.log(notes);
   return (
     <div className="flex flex-col pt-5 gap-2 border-gray-400 items-center border border-t-0 h-full">
-      <h1 className="text-3xl capitalize font-semibold ">
-        Create a new note
-      </h1>
+      <h1 className="text-3xl capitalize font-semibold ">Create a new note</h1>
       <input
         type="text"
         placeholder="Title"
         className="border-2  p-2 w-2/4  rounded-lg "
-        onInput={(e) =>
-          setTitle(
-            (e.target as HTMLInputElement).value
-          )
-        }
+        onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
       />
 
       {addTags ? (
@@ -136,38 +97,25 @@ const AddNotes: React.FC<AddNotesProps> = ({
               className="border-2 p-2 py-2.5 w-[60%]  rounded-lg "
               value={currentTag}
               onInput={(e) =>
-                setCurrentTag(
-                  (e.target as HTMLInputElement)
-                    .value
-                )
+                setCurrentTag((e.target as HTMLInputElement).value)
               }
             />
             <div
               className="px-4 py-2 rounded-lg capitalize relative flex items-center gap-2 text-lg bg-sky-600 w-[40%] text-white"
-              onClick={() =>
-                setShowTags(!showTags)
-              }
+              onClick={() => setShowTags(!showTags)}
             >
-              select tag{" "}
-              {!showTags ? (
-                <FaAngleRight />
-              ) : (
-                <FaAngleDown />
-              )}
+              select tag {!showTags ? <FaAngleRight /> : <FaAngleDown />}
               {showTags ? (
                 <div
                   className={`flex top-10 w-40 gap-2 shadow-xl p-1 px-2 rounded-lg flex-col absolute bg-white ${
-                    darkMode &&
-                    " bg-transparent border-2 backdrop-blur-sm"
+                    darkMode && " bg-transparent border-2 backdrop-blur-sm"
                   }`}
                 >
                   {tags.length > 0 ? (
                     tags.map((tag, index) => (
                       <button
                         onClick={() => {
-                          handleAddTagFromList(
-                            tag
-                          );
+                          handleAddTagFromList(tag);
                         }}
                         key={index}
                         className="bg-sky-600 capitalize text-white flex items-center gap-2 w-full p-2 rounded-md"
@@ -222,11 +170,7 @@ const AddNotes: React.FC<AddNotesProps> = ({
         rows={10}
         placeholder="content"
         className="border-2 rounded-lg  p-2 w-2/4"
-        onInput={(e) =>
-          setContent(
-            (e.target as HTMLInputElement).value
-          )
-        }
+        onInput={(e) => setContent((e.target as HTMLInputElement).value)}
       ></textarea>
       <button
         className="flex gap-2 items-center text-xl bg-sky-600 text-white p-2 rounded-md w-2/6 justify-center"

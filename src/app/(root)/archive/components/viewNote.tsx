@@ -16,49 +16,27 @@ interface Note {
 
 interface ViewNoteProps {
   selectedNote: Note;
-  setIsViewNote: React.Dispatch<
-    React.SetStateAction<boolean>
-  >;
+  setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ViewNote: React.FC<ViewNoteProps> = ({
-  selectedNote,
-  setIsViewNote,
-}) => {
-  const { darkMode, notes, setNotes, } =
-    useContext<{
-      notes: any[];
-      setNotes: React.Dispatch<
-        React.SetStateAction<any[]>
-      >;
-      settings: boolean;
-      tags: string[];
-      setSettings: React.Dispatch<
-        React.SetStateAction<boolean>
-      >;
-      setTags: React.Dispatch<
-        React.SetStateAction<string[]>
-      >;
-      darkMode: boolean;
-      setDarkMode: React.Dispatch<
-        React.SetStateAction<boolean>
-      >;
-      selectedNote: Note;
-      setSelectedNote: React.Dispatch<
-        React.SetStateAction<Note>
-      >;
-      isViewNote: boolean;
-      setIsViewNote: React.Dispatch<
-        React.SetStateAction<boolean>
-      >;
-      archive: Note[];
-      setArchive: React.Dispatch<
-        React.SetStateAction<Note[]>
-      >;
-    }>(NoteContext);
+const ViewNote: React.FC<ViewNoteProps> = ({ selectedNote, setIsViewNote }) => {
+  const { darkMode, notes, setNotes } = useContext<{
+    notes: any[];
+    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    settings: boolean;
+    tags: string[];
+    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
+    setTags: React.Dispatch<React.SetStateAction<string[]>>;
+    darkMode: boolean;
+    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedNote: Note;
+    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+    isViewNote: boolean;
+    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
+    archive: Note[];
+    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
+  }>(NoteContext);
   const [isDelete, setIsDelete] = useState(false);
-
-
 
   return (
     <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  border border-t-0 h-full min-h-[87.9vh]">
@@ -79,29 +57,23 @@ const ViewNote: React.FC<ViewNoteProps> = ({
         </h1>
         <span className="flex items-center gap-1">
           Tags:
-          {selectedNote.tags.map(
-            (tag: string, index: number) => {
-              return (
-                <p
-                  className={`w-fit px-1 text-md capitalize rounded-md my-1 ${
-                    darkMode
-                      ? "text-white bg-gray-700"
-                      : "bg-gray-300"
-                  }`}
-                  key={index}
-                >
-                  {tag}
-                </p>
-              );
-            }
-          )}
+          {selectedNote.tags.map((tag: string, index: number) => {
+            return (
+              <p
+                className={`w-fit px-1 text-md capitalize rounded-md my-1 ${
+                  darkMode ? "text-white bg-gray-700" : "bg-gray-300"
+                }`}
+                key={index}
+              >
+                {tag}
+              </p>
+            );
+          })}
         </span>
         <h2>{selectedNote.date}</h2>
       </div>
       <div className="px-4">
-        <p className="text-lg font-medium ">
-          {selectedNote.content}
-        </p>
+        <p className="text-lg font-medium ">{selectedNote.content}</p>
       </div>
       {isDelete && (
         <DeleteNoteModal

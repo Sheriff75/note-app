@@ -1,23 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client";
 import "./globals.css";
-import { NoteProvider } from "./contexts/noteProvider";
+import { NoteProvider } from "./(root)/contexts/noteProvider";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const darkMode = false; // or true, depending on your default value
+  const darkMode = false;
 
   return (
     <html lang="en">
-      <body
-        className={`antialiased ${
-          darkMode && "darkmode text-white"
-        }`}
-      >
+      <body className={`antialiased ${darkMode && "darkmode text-white"}`}>
         <NoteProvider>{children}</NoteProvider>
       </body>
     </html>
