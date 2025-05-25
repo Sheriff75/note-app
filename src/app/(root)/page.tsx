@@ -1,12 +1,41 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Main from "./components/Main";
 import Header from "./components/header";
 import SideBar from "./components/sideBar";
 import { Box} from "@mui/material";
 
-import React from "react";
+import React, {useContext} from "react";
+import { NoteContext } from "./contexts/noteProvider";
+
+type Note = {
+  id: string;
+  title: string;
+  tags: string[];
+  date: string;
+  content: string;
+};
 
 const Home = () => {
+  const {darkMode} =
+      useContext<{
+        notes: any[];
+        setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+        showNotes: boolean;
+        setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
+        settings: boolean;
+        tags: string[];
+        setSettings: React.Dispatch<React.SetStateAction<boolean>>;
+        setTags: React.Dispatch<React.SetStateAction<string[]>>;
+        darkMode: boolean;
+        setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+        selectedNote: Note;
+        setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
+        isViewNote: boolean;
+        setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
+        archive: Note[];
+        setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
+      }>(NoteContext);
   return (
      <Box
       sx={{
@@ -18,12 +47,12 @@ const Home = () => {
           display: "none",
         },
         height: "100vh",
+        width: '100%',
         overflow: "auto",
-        paddingLeft:{md :"100px", xs: '0px'},
-        paddingRight: {md :"100px", xs: '0px'},
-        paddingTop: {md :"18px", xs: '7px'},
         display: "flex",
         flexDirection: "column",
+        backgroundColor: darkMode ? 'black': '',
+        color: darkMode ? 'white' : ''
       }}
     >
       <Header />
@@ -40,7 +69,14 @@ const Home = () => {
         }}>
           <SideBar />
         </Box>
-        <Box>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: {xs: 'column', md: 'row'},
+          alignContent: 'center',
+          width: '100%',
+          justifyContent: 'center',
+          padding: '27px',
+        }}>
           <Main />
         </Box>
       </Box>

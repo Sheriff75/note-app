@@ -23,6 +23,8 @@ const ViewNote: React.FC<ViewNoteProps> = ({ selectedNote, setIsViewNote }) => {
   const { darkMode, notes, setNotes } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    showNotes: boolean;
+    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
     settings: boolean;
     tags: string[];
     setSettings: React.Dispatch<React.SetStateAction<boolean>>;

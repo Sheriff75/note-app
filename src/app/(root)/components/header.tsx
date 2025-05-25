@@ -16,10 +16,12 @@ const Header = () => {
   const [search, setSearch] = useState<string>("");
   const [preview, setPreview] = useState<boolean>(false);
   const [filteredNotes, setFilteredNotes] = useState<any[]>([]);
-  const { settings, setSettings, notes, setSelectedNote, setIsViewNote , setTags} =
+  const { settings, setSettings, notes, setSelectedNote, setIsViewNote , setTags, darkMode} =
     useContext<{
       notes: any[];
       setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+      showNotes: boolean;
+      setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
       settings: boolean;
       tags: string[];
       setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,10 +58,10 @@ const Header = () => {
   return (
     <div
       className={
-        "border w-full relative py-6 px-10 items-center flex justify-between max-h-[13vh] col-span-4"
+        `${darkMode ? 'text-white' : 'text-black'} w-full border-b-2 relative py-3 px-8 items-center hidden md:flex justify-between max-h-[13vh] col-span-4`
       }
     >
-      <h1 className="font-bold text-2xl">All Notes</h1>
+      <h1 className="font-bold text-2xl">Notes App</h1>
       <div
         className="flex items-center gap-1 relative"
         onBlur={() => setPreview(false)}
@@ -80,14 +82,14 @@ const Header = () => {
           >
             {filteredNotes.map((note: any, index: number) => (
               <p
-                key={index}
-                onClick={() => {
-                  setSelectedNote(note);
-                  setIsViewNote(true);
-                }}
-              >
-                {note.title}
-              </p>
+      key={index}
+  onMouseDown={() => {
+    setSelectedNote(note);
+    setIsViewNote(true);
+  }}
+>
+  {note.title}
+</p>
             ))}
           </div>
         )}

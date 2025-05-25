@@ -20,6 +20,8 @@ const Header = () => {
     useContext<{
       notes: any[];
       setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+      showNotes: boolean;
+      setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
       settings: boolean;
       tags: string[];
       setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,10 +50,10 @@ const Header = () => {
   return (
     <div
       className={
-        "border  w-full relative p-6 px-10 items-center flex justify-between max-h-[13vh] col-span-4"
+        "border-b-2  w-full relative py-3 px-8 items-center flex justify-between max-h-[13vh] col-span-4"
       }
     >
-      <h1 className="font-bold text-lg">All Notes</h1>
+      <h1 className="font-bold text-2xl">Notes App</h1>
       <div
         className="flex items-center gap-1 relative"
         onBlur={() => setPreview(false)}

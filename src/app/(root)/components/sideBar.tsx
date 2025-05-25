@@ -21,6 +21,8 @@ const SideBar = () => {
   const { tags, darkMode, notes, setTags } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    showNotes: boolean;
+    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
     settings: boolean;
     tags: string[];
     setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,8 +47,8 @@ const SideBar = () => {
 
   return (
     <div className="py-5 px-4 col-span-1 row-span-12 row-start-1  ">
-      <span className="flex text-3xl">
-        <GiQuillInk /> <h1>notes</h1>
+      <span className="flex text-2xl">
+        <GiQuillInk /> <h1>Notes</h1>
       </span>
       <ul className="mt-4 border-b-2">
         <Link href={"/"}>

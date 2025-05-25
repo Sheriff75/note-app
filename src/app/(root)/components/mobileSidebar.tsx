@@ -33,7 +33,7 @@ type Note = {
   content: string;
 };
 
-export default function MobileSidebar(item: Props) {
+export default function MobileSidebar(item: Props) { 
   const { window } = item;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -68,6 +68,8 @@ export default function MobileSidebar(item: Props) {
   } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    showNotes: boolean;
+    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
     settings: boolean;
     tags: string[];
     setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -102,7 +104,7 @@ export default function MobileSidebar(item: Props) {
     }, [notes, setTags]);
 
   const drawer = (
-    <div className="py-5 px-4 col-span-1 row-span-12 row-start-1  ">
+    <div className={`${darkMode? 'bg-black text-white' : 'bg-[#EBF2FC] text-black'} py-5 px-4 col-span-1 row-span-12 row-start-1 h-full md:h-auto `}>
       <span className="flex text-3xl">
         <GiQuillInk /> <h1>notes</h1>
       </span>
@@ -161,13 +163,13 @@ export default function MobileSidebar(item: Props) {
           width: { md: `calc(100% - ${drawerWidth}px)` },
           ml: { md: `${drawerWidth}px` },
           display: { md: "none" },
-          backgroundColor: darkMode ? "#1E1E1E" : "rgb(106, 57, 197)",
+          backgroundColor: darkMode ? "#1E1E1E" : "rgb(46, 92, 3)",
         }}
       >
         <Toolbar>
           <div
             className={
-              "border w-full relative py-6 px-10 items-center flex justify-between max-h-[13vh] col-span-4"
+              "w-full relative py-2 px-2 items-center flex justify-between"
             }
           >
             <IconButton
@@ -175,11 +177,11 @@ export default function MobileSidebar(item: Props) {
         aria-label="open drawer"
         edge="start"
         onClick={handleDrawerToggle}
-        sx={{ mr: 2, display: { md: "none" } }}
+        sx={{ display: { md: "none" } }}
       >
         <MenuIcon />
       </IconButton>
-            <h1 className="font-bold text-2xl">All Notes</h1>
+            <h1 className="font-bold text-xl">Notes App</h1>
             <div
               className="flex items-center gap-1 relative"
               onBlur={() => setPreview(false)}
@@ -187,7 +189,7 @@ export default function MobileSidebar(item: Props) {
               <input
                 type="text"
                 placeholder="Search notes"
-                className="w-[20vw] border-2 p-2 rounded-md focus:outline-none"
+                className="w-[20vw] border-2 p-1 rounded-md focus:outline-none text-black"
                 onInput={(e) => {
                   setSearch((e.target as HTMLInputElement).value.toUpperCase());
                   setPreview(true);
@@ -195,19 +197,19 @@ export default function MobileSidebar(item: Props) {
               />
               {preview && (
                 <div
-                  className="absolute top-12 left-2 bg-white h-fit p-4 rounded-lg w-60 shadow-[1px_2px_5px_gray]"
+                  className="absolute top-12 left-2 bg-white h-fit p-4 rounded-lg w-60 shadow-[1px_2px_5px_gray] text-black"
                   onMouseOver={() => setPreview(true)}
                 >
                   {filteredNotes.map((note: any, index: number) => (
                     <p
-                      key={index}
-                      onClick={() => {
-                        setSelectedNote(note);
-                        setIsViewNote(true);
-                      }}
-                    >
-                      {note.title}
-                    </p>
+  key={index}
+  onMouseDown={() => {
+    setSelectedNote(note);
+    setIsViewNote(true);
+  }}
+>
+  {note.title}
+</p>
                   ))}
                 </div>
               )}
@@ -215,7 +217,7 @@ export default function MobileSidebar(item: Props) {
                 className="hover:bg-gray-200 rounded-full p-1"
                 onClick={() => setSettings(!settings)}
               >
-                <CiSettings size={30} />
+                <CiSettings size={20} />
               </button>
             </div>
             {settings && <Settings />}

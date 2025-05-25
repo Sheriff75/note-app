@@ -8,6 +8,8 @@ const Settings = () => {
   const { setSettings, darkMode, setDarkMode } = useContext<{
     notes: any[];
     setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    showNotes: boolean;
+    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
     settings: boolean;
     tags: string[];
     setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +26,7 @@ const Settings = () => {
   return (
     <div
       className={`absolute right-0 top-0 z-50 w-64 h-[100vh] shadow-lg ${
-        darkMode ? "bg-black backdrop-blur-lg" : "bg-white"
+        darkMode ? "bg-black backdrop-blur-lg text-white" : "bg-[#EBF2FC] text-black"
       } p-4 rounded-md`}
     >
       <MdCancel

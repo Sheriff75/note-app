@@ -19,6 +19,8 @@ const Archive = () => {
   const {} = useContext<{
     notes: any[];
     setNotes: React.Dispatch<React.SetStateAction<any[]>>;
+    showNotes: boolean;
+    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
     settings: boolean;
     tags: string[];
     setSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,9 +46,7 @@ const Archive = () => {
         },
         height: "100vh",
         overflow: "auto",
-        paddingLeft:{md :"100px", xs: '0px'},
-        paddingRight: {md :"100px", xs: '0px'},
-        paddingTop: {md :"18px", xs: '7px'},
+        width: "100%",
         display: "flex",
         flexDirection: "column",
       }}

@@ -5,6 +5,9 @@ import { FaTag, FaAngleRight, FaAngleDown } from "react-icons/fa";
 import { BiNote } from "react-icons/bi";
 import { NoteContext } from "../contexts/noteProvider";
 import { v4 as uuid } from "uuid";
+import { MdCancel } from "react-icons/md";
+import { Box } from "@mui/material";
+
 
 interface AddNotesProps {
   date: string;
@@ -19,7 +22,7 @@ interface Note {
   content: string;
 }
 
-const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate }) => {
+const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
@@ -28,22 +31,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate }) => {
   const [currentTag, setCurrentTag] = useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<string[]>([]);
 
-  const { notes, setNotes, tags, setTags, darkMode } = useContext<{
-    notes: any[];
-    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-    settings: boolean;
-    tags: string[];
-    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-    setTags: React.Dispatch<React.SetStateAction<string[]>>;
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedNote: Note;
-    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-    isViewNote: boolean;
-    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-    archive: Note[];
-    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-  }>(NoteContext);
+  const { notes, tags, setTags, darkMode, addNote } = useContext(NoteContext);
 
   const handleAddTag = () => {
     if (currentTag.length >= 1) {
@@ -55,134 +43,151 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate }) => {
     setTagToAdd([...tagToAdd, tag]);
   };
 
-  const updateGlobalTags = () => {
-    const usedTags = new Set<string>();
-    notes.forEach((note) => {
-      note.tags.forEach((tag: string) => usedTags.add(tag));
-    });
-    setTags([...new Set([...usedTags, ...tagToAdd])]);
-  };
-
-  function handleCreateNote() {
+  async function handleCreateNote() {
     const id = uuid();
-    setNotes([
-      ...notes,
-      {
-        id,
-        title,
-        content,
-        tags: tagToAdd,
-        date,
-      },
-    ]);
+    const noteTitle = title.length > 0 ? title : "Untitled";
+    const newNote: Note = {
+      id,
+      title: noteTitle,
+      content,
+      tags: tagToAdd,
+      date,
+    };
+    await addNote(newNote);
+    // The global tags will be updated via useEffect in Header/Sidebar
+    // when 'notes' state is updated by 'addNote'
   }
 
-  console.log(notes);
-  return (
-    <div className="flex flex-col pt-5 gap-2 border-gray-400 items-center border border-t-0 h-full">
-      <h1 className="text-3xl capitalize font-semibold ">Create a new note</h1>
-      <input
-        type="text"
-        placeholder="Title"
-        className="border-2  p-2 w-2/4  rounded-lg "
-        onInput={(e) => setTitle((e.target as HTMLInputElement).value)}
-      />
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = (e.target as HTMLInputElement).value;
+    if (value.length > 0) {
+      setTitle(value);
+    } else {
+    setTitle("Untitled");
+   }
+  };
+  
 
-      {addTags ? (
-        <div className="w-2/4 flex flex-col gap-2 items-center">
-          <div className="flex gap-2 w-full items-center justify-between">
-            <input
-              type="text"
-              placeholder="Add new tag"
-              className="border-2 p-2 py-2.5 w-[60%]  rounded-lg "
-              value={currentTag}
-              onInput={(e) =>
-                setCurrentTag((e.target as HTMLInputElement).value)
-              }
-            />
-            <div
-              className="px-4 py-2 rounded-lg capitalize relative flex items-center gap-2 text-lg bg-sky-600 w-[40%] text-white"
-              onClick={() => setShowTags(!showTags)}
-            >
-              select tag {!showTags ? <FaAngleRight /> : <FaAngleDown />}
-              {showTags ? (
-                <div
-                  className={`flex top-10 w-40 gap-2 shadow-xl p-1 px-2 rounded-lg flex-col absolute bg-white ${
-                    darkMode && " bg-transparent border-2 backdrop-blur-sm"
-                  }`}
-                >
-                  {tags.length > 0 ? (
-                    tags.map((tag, index) => (
-                      <button
-                        onClick={() => {
-                          handleAddTagFromList(tag);
-                        }}
-                        key={index}
-                        className="bg-sky-600 capitalize text-white flex items-center gap-2 w-full p-2 rounded-md"
-                      >
-                        <FaTag /> {tag}
-                      </button>
-                    ))
-                  ) : (
-                    <h1 className="text-sky-600 text-center">
-                      You have no saved tags
-                    </h1>
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-          <button
-            className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-full justify-center text-lg "
-            onClick={() => {
-              handleAddTag();
-              setCurrentTag("");
-            }}
+  return (
+  <Box 
+    sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "100%",
+        textAlign: "center",
+  
+        width: "100%"
+      }}
+      className="pt-5 gap-2 border-gray-400 items-center md:border border-t-0 border-r-0 "
+  >
+    <h1 className="text-2xl font-semibold text-center flex justify-center items-center">Create a new note</h1>
+    <input
+      type="text"
+      placeholder="Title"
+      className="border-2 p-2 md:w-2/4 w-full rounded-lg"
+      onInput={handleTitle}
+    />
+
+    {addTags ? (
+      <div className="w-2/4 w-full flex flex-col gap-2 items-center">
+        <div className="flex flex-col md:flex-row gap-2 w-full items-center justify-between">
+          <input
+            type="text"
+            placeholder="Add new tag"
+            className="border-2 p-2 py-2.5 md:w-[60%] w-full rounded-lg"
+            value={currentTag}
+            onInput={(e) =>
+              setCurrentTag((e.target as HTMLInputElement).value)
+            }
+          />
+          <div
+            className="px-4 py-2 rounded-lg relative flex items-center gap-2 md:text-lg text-sm bg-sky-600 md:w-[40%] w-1/2 text-white"
+            onClick={() => setShowTags(!showTags)}
           >
-            <FaTag /> Add new tag
-          </button>
-          <div className="flex gap-2 w-full items-center justify-center">
-            {tagToAdd.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-sky-600 text-white p-2 rounded-md"
+            select tag {!showTags ? <FaAngleRight /> : <FaAngleDown />}
+            {showTags ? (
+              <div
+                className={`flex top-10 md:w-40 w-full gap-2 shadow-xl p-1 px-2 rounded-lg flex-col absolute bg-white ${
+                  darkMode && " bg-transparent border-2 backdrop-blur-sm"
+                }`}
               >
-                {tag}
-              </span>
-            ))}
+                {tags.length > 0 ? (
+                  tags.map((tag, index) => (
+                    <button
+                      onClick={() => {
+                        handleAddTagFromList(tag);
+                      }}
+                      key={index}
+                      className="bg-sky-600 capitalize text-white flex items-center gap-2 w-full p-2 rounded-md"
+                    >
+                      <FaTag /> {tag}
+                    </button>
+                  ))
+                ) : (
+                  <p className="text-sky-600 text-center">
+                    You have no saved tags
+                  </p>
+                )}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
-      ) : (
         <button
-          className="flex gap-2 items-center text-xl bg-sky-600 w-3/6 justify-center text-white p-1.5 rounded-md"
-          onClick={() => setAddTags(true)}
+          className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-full justify-center text-lg"
+          onClick={() => {
+            handleAddTag();
+            setCurrentTag("");
+          }}
         >
-          Add Tags <FaTag />
+          <FaTag /> Add new tag
         </button>
-      )}
-
-      <textarea
-        name=""
-        id=""
-        cols={30}
-        rows={10}
-        placeholder="content"
-        className="border-2 rounded-lg  p-2 w-2/4"
-        onInput={(e) => setContent((e.target as HTMLInputElement).value)}
-      ></textarea>
+        <div className="flex gap-2 w-full items-center justify-center">
+          {tagToAdd.map((tag, index) => (
+            <span
+              key={index}
+              className="bg-sky-600 text-white p-2 rounded-md"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    ) : (
       <button
-        className="flex gap-2 items-center text-xl bg-sky-600 text-white p-2 rounded-md w-2/6 justify-center"
-        onClick={() => {
-          handleCreateNote();
-          updateGlobalTags();
+        className="flex gap-2 items-center text-lg bg-sky-600 md:w-3/6 w-full justify-center text-white p-1.5 rounded-md"
+        onClick={() => setAddTags(true)}
+      >
+        Add Tags <FaTag />
+      </button>
+    )}
+
+    <textarea
+      cols={30}
+      rows={10}
+      placeholder="content"
+      className="border-2 rounded-lg p-2 md:w-2/4 w-full h-40 md:h-auto"
+      onInput={(e) => setContent((e.target as HTMLInputElement).value)}
+    ></textarea>
+    <div className="flex gap-5 w-full items-center text-center justify-center">
+      <button
+        className="flex gap-2 items-center text-lg bg-sky-600 text-white p-2 rounded-md md:w-2/6 w-4/5 justify-center"
+        onClick={async () => {
+          await handleCreateNote();
           setIsCreate(false);
         }}
       >
-        Create note <BiNote />
+        create note <BiNote />
       </button>
+      <MdCancel
+        size={30}
+        className="cursor-pointer"
+        onClick={() => setIsCreate(false)}
+      />
     </div>
+  </Box>
   );
 };
 
