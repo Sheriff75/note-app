@@ -85,7 +85,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
     <input
       type="text"
       placeholder="Title"
-      className="border-2 p-2 md:w-2/4 w-full rounded-lg"
+      className= {`${darkMode ? 'text-black' : 'text-black'} border-2 p-2 md:w-2/4 w-full rounded-lg`}
       onInput={handleTitle}
     />
 
@@ -95,7 +95,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
           <input
             type="text"
             placeholder="Add new tag"
-            className="border-2 p-2 py-2.5 md:w-[60%] rounded-lg"
+            className= {`${darkMode ? 'text-black' : 'text-black'} border-2 p-2 py-2.5 md:w-[60%] rounded-lg`}
             value={currentTag}
             onInput={(e) =>
               setCurrentTag((e.target as HTMLInputElement).value)
@@ -168,7 +168,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
       cols={30}
       rows={10}
       placeholder="content"
-      className="border-2 rounded-lg p-2 md:w-2/4 w-full h-40 md:h-auto"
+      className= {`${darkMode ? 'text-black' : 'text-black'} border-2 rounded-lg p-2 md:w-2/4 w-full h-40 md:h-auto`}
       onInput={(e) => setContent((e.target as HTMLInputElement).value)}
     ></textarea>
     <div className="flex gap-5 w-full items-center text-center justify-center">

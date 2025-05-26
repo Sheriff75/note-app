@@ -128,7 +128,7 @@ const Main = () => {
         )}
 
       </div>
-      
+
       <div className="md:h-screen md:min-w-[1020px] hidden md:block flex items-center justify-center">
         {!isCreate && !isViewNote && (
           <div className="flex justify-center items-center h-full border border-t-0 border-r-0 border-b-0">
