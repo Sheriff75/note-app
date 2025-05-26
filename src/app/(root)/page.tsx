@@ -8,34 +8,9 @@ import { Box} from "@mui/material";
 import React, {useContext} from "react";
 import { NoteContext } from "./contexts/noteProvider";
 
-type Note = {
-  id: string;
-  title: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
 
 const Home = () => {
-  const {darkMode} =
-      useContext<{
-        notes: any[];
-        setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-        showNotes: boolean;
-        setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-        settings: boolean;
-        tags: string[];
-        setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-        setTags: React.Dispatch<React.SetStateAction<string[]>>;
-        darkMode: boolean;
-        setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-        selectedNote: Note;
-        setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-        isViewNote: boolean;
-        setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-        archive: Note[];
-        setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-      }>(NoteContext);
+  const { darkMode } = useContext(NoteContext);
   return (
      <Box
       sx={{

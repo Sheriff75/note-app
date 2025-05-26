@@ -18,7 +18,6 @@ interface deleteNoteProps {
 
 
 const DeleteNoteModal:React.FC<deleteNoteProps> = ({
-  selectedNote,
   setIsDelete,
   onDeleteConfirm
 }) => {

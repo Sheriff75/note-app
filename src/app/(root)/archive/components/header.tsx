@@ -1,40 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useContext, useState, useEffect } from "react";
 import { CiSettings } from "react-icons/ci";
-import { NoteContext } from "../../contexts/noteProvider";
-import Settings from "./Settings";
+import Settings from "./Settings"
+import  {NoteContext, NoteContextType} from "../../contexts/noteProvider"
 
-type Note = {
-  id: string;
-  title: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
 
 const Header = () => {
   const [search, setSearch] = useState<string>("");
   const [preview, setPreview] = useState<boolean>(false);
   const [filteredNotes, setFilteredNotes] = useState<any[]>([]);
-  const { settings, setSettings, notes, setSelectedNote, setIsViewNote } =
-    useContext<{
-      notes: any[];
-      setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-      showNotes: boolean;
-      setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-      settings: boolean;
-      tags: string[];
-      setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-      setTags: React.Dispatch<React.SetStateAction<string[]>>;
-      darkMode: boolean;
-      setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-      selectedNote: Note;
-      setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-      isViewNote: boolean;
-      setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-      archive: Note[];
-      setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-    }>(NoteContext);
+  const { settings, setSettings, notes, setSelectedNote, setIsViewNote , setTags, darkMode} =
+    useContext(NoteContext as React.Context<NoteContextType>);
 
   useEffect(() => {
     const checkSearch = (item: any) => {
@@ -47,10 +23,18 @@ const Header = () => {
     setFilteredNotes(notes.filter(checkSearch));
   }, [search, notes]);
 
+  useEffect(() => {
+    const usedTags = new Set<string>();
+    notes.forEach((note: any) => {
+      note.tags.forEach((tag: string) => usedTags.add(tag));
+    });
+    setTags(Array.from(usedTags));
+  }, [notes, setTags]);
+
   return (
     <div
       className={
-        "border-b-2  w-full relative py-3 px-8 items-center flex justify-between max-h-[13vh] col-span-4"
+        `${darkMode ? 'text-white' : 'text-black'} w-full border-b-2 relative py-3 px-8 items-center hidden md:flex justify-between max-h-[13vh] col-span-4`
       }
     >
       <h1 className="font-bold text-2xl">Notes App</h1>
@@ -74,14 +58,14 @@ const Header = () => {
           >
             {filteredNotes.map((note: any, index: number) => (
               <p
-                key={index}
-                onClick={() => {
-                  setSelectedNote(note);
-                  setIsViewNote(true);
-                }}
-              >
-                {note.title}
-              </p>
+      key={index}
+  onMouseDown={() => {
+    setSelectedNote(note);
+    setIsViewNote(true);
+  }}
+>
+  {note.title}
+</p>
             ))}
           </div>
         )}

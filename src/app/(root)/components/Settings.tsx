@@ -5,24 +5,7 @@ import { NoteContext } from "../contexts/noteProvider";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 const Settings = () => {
-  const { setSettings, darkMode, setDarkMode } = useContext<{
-    notes: any[];
-    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-    showNotes: boolean;
-    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-    settings: boolean;
-    tags: string[];
-    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-    setTags: React.Dispatch<React.SetStateAction<string[]>>;
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedNote: any;
-    setSelectedNote: React.Dispatch<React.SetStateAction<any>>;
-    isViewNote: boolean;
-    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-    archive: any[];
-    setArchive: React.Dispatch<React.SetStateAction<any[]>>;
-  }>(NoteContext);
+  const { setSettings, darkMode, setDarkMode } = useContext(NoteContext);
   return (
     <div
       className={`absolute right-0 top-0 z-50 w-64 h-[100vh] shadow-lg ${

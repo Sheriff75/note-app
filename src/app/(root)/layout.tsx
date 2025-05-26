@@ -7,13 +7,7 @@ import { NoteContext } from "./contexts/noteProvider";
 import MobileSidebar from "./components/mobileSidebar";
 
 
-type Note = {
-  id: string;
-  title: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
+
 export default function RootLayout({
   children,
 }: Readonly<{

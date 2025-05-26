@@ -2,40 +2,15 @@
 "use client";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
-import { NoteContext } from "../../contexts/noteProvider";
+import { NoteContext, NoteContextType } from "../../contexts/noteProvider"
 import React from "react";
 import { GiQuillInk } from "react-icons/gi";
 import { BiHome } from "react-icons/bi";
 import { FaArchive } from "react-icons/fa";
 import { PiTag } from "react-icons/pi";
 
-interface Note {
-  id: string;
-  title: string;
-  date: string;
-  tags: string[];
-  content: string;
-}
-
 const SideBar = () => {
-  const { tags, darkMode, notes, setTags } = useContext<{
-    notes: any[];
-    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-    showNotes: boolean;
-    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-    settings: boolean;
-    tags: string[];
-    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-    setTags: React.Dispatch<React.SetStateAction<string[]>>;
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedNote: Note;
-    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-    isViewNote: boolean;
-    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-    archive: Note[];
-    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-  }>(NoteContext);
+  const { tags, darkMode, notes, setTags } = useContext(NoteContext as React.Context<NoteContextType>);
 
   useEffect(() => {
     const usedTags = new Set<string>();
@@ -53,7 +28,7 @@ const SideBar = () => {
       <ul className="mt-4 border-b-2">
         <Link href={"/"}>
           <li
-            className={`py-2 flex px-2 gap-2 text-lg font-semibold   items-center ${
+            className={`py-2 flex px-2 gap-2  text-lg font-semibold items-center ${
               darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
             } rounded-md`}
           >
@@ -62,7 +37,7 @@ const SideBar = () => {
         </Link>
         <Link href={"/archive"}>
           <li
-            className={`py-2 flex px-2 text-lg font-semibold gap-2 items-center mb-1 ${
+            className={` py-2 flex px-2 gap-2 text-lg font-semibold items-center mb-1 ${
               darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
             } rounded-md`}
           >

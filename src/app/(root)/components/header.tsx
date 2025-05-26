@@ -2,39 +2,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CiSettings } from "react-icons/ci";
 import Settings from "./Settings";
-import { NoteContext } from "../contexts/noteProvider";
+import { NoteContext, NoteContextType } from "../contexts/noteProvider";
 
-type Note = {
-  id: string;
-  title: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
 
 const Header = () => {
   const [search, setSearch] = useState<string>("");
   const [preview, setPreview] = useState<boolean>(false);
   const [filteredNotes, setFilteredNotes] = useState<any[]>([]);
   const { settings, setSettings, notes, setSelectedNote, setIsViewNote , setTags, darkMode} =
-    useContext<{
-      notes: any[];
-      setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-      showNotes: boolean;
-      setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-      settings: boolean;
-      tags: string[];
-      setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-      setTags: React.Dispatch<React.SetStateAction<string[]>>;
-      darkMode: boolean;
-      setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-      selectedNote: Note;
-      setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-      isViewNote: boolean;
-      setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-      archive: Note[];
-      setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-    }>(NoteContext);
+    useContext(NoteContext as React.Context<NoteContextType>);
 
   useEffect(() => {
     const checkSearch = (item: any) => {

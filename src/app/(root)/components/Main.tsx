@@ -9,13 +9,6 @@ import { NoteContext } from "../contexts/noteProvider";
 import {Button, Paper, Stack, Box} from '@mui/material';
 import { MdExpandMore } from "react-icons/md";
 
-type Note = {
-  id: string;
-  title: string;
-  tags: string[];
-  date: string;
-  content: string;
-};
 const Main = () => {
   const [isCreate, setIsCreate] = useState(false);
   const [date, setDate] = useState<string>("");
@@ -28,24 +21,7 @@ const Main = () => {
     setSelectedNote,
     isViewNote,
     setIsViewNote,
-  } = useContext<{
-    notes: any[];
-    setNotes: React.Dispatch<React.SetStateAction<any[]>>;
-    showNotes: boolean;
-    setShowNotes: React.Dispatch<React.SetStateAction<boolean>>;
-    settings: boolean;
-    tags: string[];
-    setSettings: React.Dispatch<React.SetStateAction<boolean>>;
-    setTags: React.Dispatch<React.SetStateAction<string[]>>;
-    darkMode: boolean;
-    setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedNote: Note;
-    setSelectedNote: React.Dispatch<React.SetStateAction<Note>>;
-    isViewNote: boolean;
-    setIsViewNote: React.Dispatch<React.SetStateAction<boolean>>;
-    archive: Note[];
-    setArchive: React.Dispatch<React.SetStateAction<Note[]>>;
-  }>(NoteContext);
+  } = useContext(NoteContext);
 
   useEffect(() => {
     const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -152,6 +128,7 @@ const Main = () => {
         )}
 
       </div>
+      
       <div className="md:h-screen md:min-w-[1020px] hidden md:block flex items-center justify-center">
         {!isCreate && !isViewNote && (
           <div className="flex justify-center items-center h-full border border-t-0 border-r-0 border-b-0">

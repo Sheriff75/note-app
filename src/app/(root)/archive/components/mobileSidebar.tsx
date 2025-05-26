@@ -10,13 +10,13 @@ import {
   Toolbar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NoteContext } from "../contexts/noteProvider";
+import { NoteContext} from "../../contexts/noteProvider"
 import { CiSettings } from "react-icons/ci";
 import { GiQuillInk } from "react-icons/gi";
 import { BiHome } from "react-icons/bi";
 import { FaArchive } from "react-icons/fa";
 import { PiTag } from "react-icons/pi";
-import Settings from "./Settings";
+import Settings from "./Settings"
 import Link from "next/link";
 
 const drawerWidth = 240;

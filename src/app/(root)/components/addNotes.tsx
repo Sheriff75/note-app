@@ -31,7 +31,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
   const [currentTag, setCurrentTag] = useState<string>("");
   const [tagToAdd, setTagToAdd] = useState<string[]>([]);
 
-  const { notes, tags, setTags, darkMode, addNote } = useContext(NoteContext);
+  const { tags, darkMode, addNote } = useContext(NoteContext);
 
   const handleAddTag = () => {
     if (currentTag.length >= 1) {
@@ -91,11 +91,11 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
 
     {addTags ? (
       <div className="w-2/4 w-full flex flex-col gap-2 items-center">
-        <div className="flex flex-col md:flex-row gap-2 w-full items-center justify-between">
+        <div className="flex flex-col md:flex-row gap-2 items-center justify-between">
           <input
             type="text"
             placeholder="Add new tag"
-            className="border-2 p-2 py-2.5 md:w-[60%] w-full rounded-lg"
+            className="border-2 p-2 py-2.5 md:w-[60%] rounded-lg"
             value={currentTag}
             onInput={(e) =>
               setCurrentTag((e.target as HTMLInputElement).value)
@@ -136,7 +136,7 @@ const AddNotes: React.FC<AddNotesProps> = ({ date, setIsCreate}) => {
           </div>
         </div>
         <button
-          className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 w-full justify-center text-lg"
+          className="flex gap-2 rounded-md items-center bg-sky-600 text-white p-2 justify-center text-lg"
           onClick={() => {
             handleAddTag();
             setCurrentTag("");
