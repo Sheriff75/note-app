@@ -118,6 +118,12 @@ const Main = () => {
         </div>
         )}
       </div>
+      
+        {isViewNote && (
+                <div className="md:hidden flex justify-center items-center w-full">
+                 <ViewNote selectedNote={selectedNote} setIsViewNote={setIsViewNote} />
+                </div>
+                )}
 
       <div className="md:h-screen md:min-w-[1020px] hidden md:block flex items-center justify-center">
         {!isCreate && !isViewNote && (

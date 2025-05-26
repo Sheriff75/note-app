@@ -5,7 +5,6 @@ import { FaTrash, FaClock, FaTag } from "react-icons/fa";
 import DeleteNoteModal from "./deleteModal";
 import { useContext } from "react";
 import { NoteContext } from "../../contexts/noteProvider";
-import { BiArchiveIn } from "react-icons/bi";
 
 interface Note {
   id: string;
@@ -21,22 +20,10 @@ interface ViewNoteProps {
 }
 
 const ViewNote: React.FC<ViewNoteProps> = ({ selectedNote, setIsViewNote }) => {
-  const { darkMode, notes, setNotes, setArchive, archive, deleteNote } = useContext(NoteContext);
+  const { darkMode, deleteNote } = useContext(NoteContext);
   const [isDelete, setIsDelete] = useState(false);
 
-  const addToArchive = async () => {
-    await fetch(`/api/archive`, {
-      method: "POST",
-      body: JSON.stringify(selectedNote),
-      headers: { "Content-Type": "application/json" },
-    });
-    await fetch(`/api/notes/${selectedNote.id}`, {
-      method: "DELETE",
-    });
-    setArchive([...archive, selectedNote]);
-    setNotes(notes.filter((item) => item.id !== selectedNote.id));
-    setIsViewNote(false);
-  };
+
 
   const handleDeleteConfirm = async () => {
     await deleteNote(selectedNote.id);
@@ -46,12 +33,6 @@ const ViewNote: React.FC<ViewNoteProps> = ({ selectedNote, setIsViewNote }) => {
   return (
     <div className="flex flex-col pt-5 relative gap-2 border-gray-400 p-4  md:border border-t-0 border-r-0 md:h-full md:min-h-[87.9vh]">
       <div className="absolute right-5 top-5 flex items-center gap-2 md:text-xl text-lg">
-        <BiArchiveIn
-          className="cursor-pointer "
-          onClick={() => {
-            addToArchive();
-          }}
-        />
         <FaTrash
           className="cursor-pointer "
           onClick={() => setIsDelete(true)}
